@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Ortodoncia">
+  <rect width="400" height="300" rx="20" fill="#f0f7f4"/>
+  <path d="M190 96c-2-9-6-16-12-20-11-8-27-5-33 7-3 7-3 16 1 23 5 12 20 15 29 8 2-1 4-1 6 0 9 7 23 4 29-8 4-7 4-16 1-23-6-12-22-15-33-7-6 4-10 11-12 20z" fill="#2b8fbe"/>
+  <path d="M178 130h44" stroke="#ffffff" stroke-width="3"/>
+  <path d="M178 142h44M178 154h44M178 166h44" stroke="#b3dcef" stroke-width="3"/>
+  <circle cx="170" cy="130" r="3.5" fill="#7fd0f0"/><circle cx="230" cy="130" r="3.5" fill="#7fd0f0"/>
+  <circle cx="170" cy="166" r="3.5" fill="#7fd0f0"/><circle cx="230" cy="166" r="3.5" fill="#7fd0f0"/>
+</svg>

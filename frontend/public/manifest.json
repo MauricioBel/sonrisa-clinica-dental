@@ -1,0 +1,23 @@
+{
+  "name": "Sonrisa Clínica Dental",
+  "short_name": "Sonrisa",
+  "description": "Clínica dental en Santiago de Chile. Agenda tu hora online.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f3d5e",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

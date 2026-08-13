@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /reserva/confirmacion/
+
+Sitemap: http://localhost:5173/sitemap.xml

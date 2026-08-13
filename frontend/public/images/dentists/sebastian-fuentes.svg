@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Dr. Sebastián Fuentes">
+  <rect width="400" height="400" rx="24" fill="#eef7fc"/>
+  <circle cx="200" cy="150" r="70" fill="#d9edf7"/>
+  <circle cx="200" cy="128" r="40" fill="#1c4f6c"/>
+  <path d="M200 188c-56 0-92 42-96 92 44 32 148 32 192 0-4-50-40-92-96-92z" fill="#1c4f6c"/>
+  <path d="M160 150h80" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0"/>
+</svg>

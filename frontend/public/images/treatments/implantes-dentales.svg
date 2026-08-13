@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Implantes Dentales">
+  <rect width="400" height="300" rx="20" fill="#eef7fc"/>
+  <path d="M190 100c-2-9-6-16-12-20-11-8-27-5-33 7-3 7-3 16 1 23 5 12 20 15 29 8 2-1 4-1 6 0 9 7 23 4 29-8 4-7 4-16 1-23-6-12-22-15-33-7-6 4-10 11-12 20z" fill="#2b8fbe"/>
+  <path d="M200 126v64M182 130v44M218 130v44" stroke="#1c5f82" stroke-width="6" stroke-linecap="round"/>
+  <path d="M168 244h64M160 244c0-22 8-34 22-34M216 210c14 0 24 12 24 34" stroke="#1c5f82" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M140 224l-8 16M260 224l8 16" stroke="#2b8fbe" stroke-width="5" stroke-linecap="round"/>
+</svg>

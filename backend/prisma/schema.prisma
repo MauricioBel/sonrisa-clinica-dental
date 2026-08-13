@@ -1,0 +1,95 @@
+// Schema de base de datos de Sonrisa Clínica Dental
+// Documentación: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// Estado del ciclo de vida de una reserva.
+/// El MVP crea reservas como CONFIRMED; PENDING/CANCELLED/COMPLETED
+/// quedan disponibles para administración futura.
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Dentist {
+  id              Int              @id @default(autoincrement())
+  name            String
+  role            String
+  specialty       String
+  description     String
+  experienceYears Int
+  imageUrl        String
+  isActive        Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  appointments    Appointment[]
+  businessHours   BusinessHours[]
+
+  @@index([isActive])
+}
+
+model Treatment {
+  id               Int           @id @default(autoincrement())
+  name             String
+  slug             String        @unique
+  shortDescription String
+  description      String
+  benefits         Json
+  durationMinutes  Int
+  price            Int
+  imageUrl         String
+  isFeatured       Boolean       @default(false)
+  sortOrder        Int           @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  appointments     Appointment[]
+
+  @@index([slug])
+}
+
+/// Horario laboral semanal de un dentista. Un registro por día.
+/// dayOfWeek usa la convención de JS: 0 = domingo ... 6 = sábado.
+model BusinessHours {
+  id        Int     @id @default(autoincrement())
+  dentistId Int
+  dentist   Dentist @relation(fields: [dentistId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  openTime  String
+  closeTime String
+
+  @@unique([dentistId, dayOfWeek])
+  @@index([dentistId])
+}
+
+/// Reserva de una hora. `date` usa formato YYYY-MM-DD y `time` HH:mm.
+/// El par único (dentistId, date, time) impide reservas duplicadas en la BD.
+model Appointment {
+  id              Int               @id @default(autoincrement())
+  patientName     String
+  patientLastName String
+  patientEmail    String
+  patientPhone    String
+  date            String
+  time            String
+  comment         String?
+  status          AppointmentStatus @default(CONFIRMED)
+  dentistId       Int
+  dentist         Dentist           @relation(fields: [dentistId], references: [id], onDelete: Restrict)
+  treatmentId     Int
+  treatment       Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
+  createdAt       DateTime          @default(now())
+
+  @@unique([dentistId, date, time])
+  @@index([dentistId])
+  @@index([treatmentId])
+  @@index([date])
+}
