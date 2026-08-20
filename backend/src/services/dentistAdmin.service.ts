@@ -5,6 +5,7 @@ import type {
   DentistCreateInput,
   DentistUpdateInput,
 } from '../schemas/validation.js';
+import { emitDomainEvent } from '../automation/index.js';
 
 const include = {
   businessHours: {
@@ -36,7 +37,7 @@ export async function getAdminDentistById(id: number) {
 }
 
 export async function createDentist(input: DentistCreateInput) {
-  return prisma.dentist.create({
+  const created = await prisma.dentist.create({
     data: {
       name: input.name,
       role: input.role,
@@ -48,6 +49,20 @@ export async function createDentist(input: DentistCreateInput) {
     },
     include,
   });
+
+  await emitDomainEvent({
+    type: 'dentist.created',
+    occurredAt: new Date().toISOString(),
+    data: {
+      dentistId: created.id,
+      name: created.name,
+      role: created.role,
+      specialty: created.specialty,
+      isActive: created.isActive,
+    },
+  });
+
+  return created;
 }
 
 export async function updateDentist(id: number, input: DentistUpdateInput) {
@@ -55,7 +70,7 @@ export async function updateDentist(id: number, input: DentistUpdateInput) {
   if (!existing) {
     throw notFoundError('Profesional');
   }
-  return prisma.dentist.update({
+  const updated = await prisma.dentist.update({
     where: { id },
     data: {
       ...(input.name !== undefined ? { name: input.name } : {}),
@@ -69,6 +84,20 @@ export async function updateDentist(id: number, input: DentistUpdateInput) {
     },
     include,
   });
+
+  await emitDomainEvent({
+    type: 'dentist.updated',
+    occurredAt: new Date().toISOString(),
+    data: {
+      dentistId: updated.id,
+      name: updated.name,
+      role: updated.role,
+      specialty: updated.specialty,
+      isActive: updated.isActive,
+    },
+  });
+
+  return updated;
 }
 
 export async function setDentistActive(id: number, input: DentistActiveInput) {
@@ -76,9 +105,17 @@ export async function setDentistActive(id: number, input: DentistActiveInput) {
   if (!existing) {
     throw notFoundError('Profesional');
   }
-  return prisma.dentist.update({
+  const updated = await prisma.dentist.update({
     where: { id },
     data: { isActive: input.isActive },
     include,
   });
+
+  await emitDomainEvent({
+    type: updated.isActive ? 'dentist.activated' : 'dentist.deactivated',
+    occurredAt: new Date().toISOString(),
+    data: { dentistId: updated.id, name: updated.name },
+  });
+
+  return updated;
 }

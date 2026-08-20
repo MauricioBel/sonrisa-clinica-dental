@@ -5,6 +5,7 @@ import type {
   TreatmentCreateInput,
   TreatmentUpdateInput,
 } from '../schemas/validation.js';
+import { emitDomainEvent } from '../automation/index.js';
 
 const include = {
   _count: { select: { appointments: true } },
@@ -46,7 +47,7 @@ export async function getAdminTreatmentById(id: number) {
 export async function createTreatment(input: TreatmentCreateInput) {
   await ensureSlugAvailable(input.slug);
 
-  return prisma.treatment.create({
+  const created = await prisma.treatment.create({
     data: {
       name: input.name,
       slug: input.slug,
@@ -62,6 +63,19 @@ export async function createTreatment(input: TreatmentCreateInput) {
     },
     include,
   });
+
+  await emitDomainEvent({
+    type: 'treatment.created',
+    occurredAt: new Date().toISOString(),
+    data: {
+      treatmentId: created.id,
+      name: created.name,
+      slug: created.slug,
+      isActive: created.isActive,
+    },
+  });
+
+  return created;
 }
 
 export async function updateTreatment(id: number, input: TreatmentUpdateInput) {
@@ -74,7 +88,7 @@ export async function updateTreatment(id: number, input: TreatmentUpdateInput) {
     await ensureSlugAvailable(input.slug, id);
   }
 
-  return prisma.treatment.update({
+  const updated = await prisma.treatment.update({
     where: { id },
     data: {
       ...(input.name !== undefined ? { name: input.name } : {}),
@@ -94,6 +108,19 @@ export async function updateTreatment(id: number, input: TreatmentUpdateInput) {
     },
     include,
   });
+
+  await emitDomainEvent({
+    type: 'treatment.updated',
+    occurredAt: new Date().toISOString(),
+    data: {
+      treatmentId: updated.id,
+      name: updated.name,
+      slug: updated.slug,
+      isActive: updated.isActive,
+    },
+  });
+
+  return updated;
 }
 
 export async function setTreatmentActive(id: number, input: TreatmentActiveInput) {
@@ -101,9 +128,17 @@ export async function setTreatmentActive(id: number, input: TreatmentActiveInput
   if (!existing) {
     throw notFoundError('Tratamiento');
   }
-  return prisma.treatment.update({
+  const updated = await prisma.treatment.update({
     where: { id },
     data: { isActive: input.isActive },
     include,
   });
+
+  await emitDomainEvent({
+    type: updated.isActive ? 'treatment.activated' : 'treatment.deactivated',
+    occurredAt: new Date().toISOString(),
+    data: { treatmentId: updated.id, name: updated.name },
+  });
+
+  return updated;
 }

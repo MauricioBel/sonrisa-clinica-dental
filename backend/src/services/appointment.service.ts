@@ -2,6 +2,7 @@ import { prisma } from '../lib/prisma.js';
 import { ApiError, conflictError, notFoundError } from '../utils/ApiError.js';
 import type { CreateAppointmentInput } from '../schemas/validation.js';
 import { getAvailability } from './availability.service.js';
+import { emitDomainEvent } from '../automation/index.js';
 
 const toMinutes = (time: string): number => {
   const [h, m] = time.split(':').map(Number);
@@ -61,7 +62,7 @@ export async function createAppointment(input: CreateAppointmentInput) {
 
   // Transacción: verifica solapamiento y crea. El índice único
   // @@unique([dentistId, date, time]) es la garantía final contra duplicados.
-  return prisma.$transaction(async (tx) => {
+  const created = await prisma.$transaction(async (tx) => {
     const start = toMinutes(time);
     const end = start + treatment.durationMinutes;
 
@@ -110,6 +111,32 @@ export async function createAppointment(input: CreateAppointmentInput) {
       },
     });
   });
+
+  // Efecto secundario post-commit: notifica a la automatización. Un fallo en
+  // las acciones no altera la reserva recién creada.
+  await emitDomainEvent({
+    type: 'appointment.created',
+    occurredAt: new Date().toISOString(),
+    data: {
+      appointment: {
+        id: created.id,
+        date: created.date,
+        time: created.time,
+        comment: created.comment,
+        treatment: { id: created.treatment.id, name: created.treatment.name },
+        dentist: { id: created.dentist.id, name: created.dentist.name },
+        patient: {
+          name: created.patientName,
+          lastName: created.patientLastName,
+          email: created.patientEmail,
+          phone: created.patientPhone,
+        },
+      },
+      source: 'WEB',
+    },
+  });
+
+  return created;
 }
 
 export async function getAppointmentById(id: number) {

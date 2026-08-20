@@ -10,6 +10,7 @@ import type {
   RescheduleAppointmentInput,
 } from '../schemas/validation.js';
 import { getAvailability } from './availability.service.js';
+import { emitDomainEvent } from '../automation/index.js';
 
 type AppointmentStatusValue = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
 
@@ -116,7 +117,7 @@ export async function cancelAppointment(id: number, reason: string) {
     );
   }
 
-  return prisma.appointment.update({
+  const updated = await prisma.appointment.update({
     where: { id },
     data: {
       status: 'CANCELLED',
@@ -127,6 +128,25 @@ export async function cancelAppointment(id: number, reason: string) {
     },
     include: includes,
   });
+
+  await emitDomainEvent({
+    type: 'appointment.cancelled',
+    occurredAt: new Date().toISOString(),
+    data: {
+      appointmentId: updated.id,
+      reason,
+      date: updated.date,
+      time: updated.time,
+      patient: {
+        name: updated.patientName,
+        lastName: updated.patientLastName,
+        email: updated.patientEmail,
+        phone: updated.patientPhone,
+      },
+    },
+  });
+
+  return updated;
 }
 
 export async function changeAppointmentStatus(
@@ -155,7 +175,7 @@ export async function changeAppointmentStatus(
     );
   }
 
-  return prisma.appointment.update({
+  const updated = await prisma.appointment.update({
     where: { id },
     data: {
       status,
@@ -168,6 +188,18 @@ export async function changeAppointmentStatus(
     },
     include: includes,
   });
+
+  await emitDomainEvent({
+    type: 'appointment.updated',
+    occurredAt: new Date().toISOString(),
+    data: {
+      appointmentId: updated.id,
+      previousStatus: appointment.status as AppointmentStatusValue,
+      newStatus: updated.status as AppointmentStatusValue,
+    },
+  });
+
+  return updated;
 }
 
 export async function rescheduleAppointment(
@@ -232,7 +264,7 @@ export async function rescheduleAppointment(
     });
   }
 
-  return prisma.$transaction(async (tx) => {
+  const created = await prisma.$transaction(async (tx) => {
     const start = toMinutes(startTime);
     const end = start + availability.durationMinutes;
 
@@ -294,4 +326,45 @@ export async function rescheduleAppointment(
 
     return created;
   });
+
+  await emitDomainEvent({
+    type: 'appointment.cancelled',
+    occurredAt: new Date().toISOString(),
+    data: {
+      appointmentId: appointment.id,
+      reason: RESCHEDULE_REASON,
+      date: appointment.date,
+      time: appointment.time,
+      patient: {
+        name: appointment.patientName,
+        lastName: appointment.patientLastName,
+        email: appointment.patientEmail,
+        phone: appointment.patientPhone,
+      },
+    },
+  });
+
+  await emitDomainEvent({
+    type: 'appointment.rescheduled',
+    occurredAt: new Date().toISOString(),
+    data: {
+      previousAppointmentId: appointment.id,
+      newAppointmentId: created.id,
+      previousDate: appointment.date,
+      previousTime: appointment.time,
+      newDate: created.date,
+      newTime: created.time,
+      previousDentistId: appointment.dentistId,
+      newDentistId: created.dentistId,
+      patient: {
+        name: created.patientName,
+        lastName: created.patientLastName,
+        email: created.patientEmail,
+        phone: created.patientPhone,
+      },
+      treatment: { id: created.treatment.id, name: created.treatment.name },
+    },
+  });
+
+  return created;
 }
