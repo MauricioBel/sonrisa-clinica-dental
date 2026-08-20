@@ -20,6 +20,24 @@ enum AppointmentStatus {
   COMPLETED
 }
 
+/// Rol de un usuario del panel administrativo.
+enum UserRole {
+  ADMIN
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         UserRole @default(ADMIN)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isActive])
+}
+
 model Dentist {
   id              Int              @id @default(autoincrement())
   name            String
@@ -33,6 +51,7 @@ model Dentist {
   updatedAt       DateTime         @updatedAt
   appointments    Appointment[]
   businessHours   BusinessHours[]
+  timeBlocks      TimeBlock[]
 
   @@index([isActive])
 }
@@ -49,11 +68,13 @@ model Treatment {
   imageUrl         String
   isFeatured       Boolean       @default(false)
   sortOrder        Int           @default(0)
+  isActive         Boolean       @default(true)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   appointments     Appointment[]
 
   @@index([slug])
+  @@index([isActive])
 }
 
 /// Horario laboral semanal de un dentista. Un registro por día.
@@ -70,26 +91,52 @@ model BusinessHours {
   @@index([dentistId])
 }
 
-/// Reserva de una hora. `date` usa formato YYYY-MM-DD y `time` HH:mm.
-/// El par único (dentistId, date, time) impide reservas duplicadas en la BD.
-model Appointment {
-  id              Int               @id @default(autoincrement())
-  patientName     String
-  patientLastName String
-  patientEmail    String
-  patientPhone    String
-  date            String
-  time            String
-  comment         String?
-  status          AppointmentStatus @default(CONFIRMED)
-  dentistId       Int
-  dentist         Dentist           @relation(fields: [dentistId], references: [id], onDelete: Restrict)
-  treatmentId     Int
-  treatment       Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
-  createdAt       DateTime          @default(now())
+/// Bloqueo puntual de una franja horaria de un profesional en una fecha
+/// concreta (licencia, feriado, formación). `date` usa YYYY-MM-DD y las horas
+/// HH:mm. `getAvailability` excluye estos bloques al calcular los slots.
+model TimeBlock {
+  id        Int      @id @default(autoincrement())
+  dentistId Int
+  dentist   Dentist  @relation(fields: [dentistId], references: [id], onDelete: Restrict)
+  date      String
+  startTime String
+  endTime   String
+  reason    String?
+  createdAt DateTime @default(now())
 
-  @@unique([dentistId, date, time])
+  @@index([dentistId, date])
+}
+
+/// Reserva de una hora. `date` usa formato YYYY-MM-DD y `time` HH:mm.
+/// La protección contra doble reserva se apoya en `conflictKey` (único),
+/// formado por `dentistId:date:time`. Cuando una cita se cancela, su
+/// `conflictKey` pasa a NULL, liberando la franja para una nueva reserva.
+model Appointment {
+  id                Int               @id @default(autoincrement())
+  patientName       String
+  patientLastName   String
+  patientEmail      String
+  patientPhone      String
+  date              String
+  time              String
+  comment           String?
+  status            AppointmentStatus @default(CONFIRMED)
+  /// Origen de la cita: WEB (paciente) o ADMIN (panel). Reservado a la gestión.
+  source            String            @default("WEB")
+  cancelReason      String?
+  canceledAt        DateTime?
+  rescheduledFromId Int?
+  rescheduledFrom   Appointment?      @relation("Reschedule", fields: [rescheduledFromId], references: [id], onDelete: SetNull)
+  rescheduledTo     Appointment[]     @relation("Reschedule")
+  conflictKey       String?           @unique
+  dentistId         Int
+  dentist           Dentist           @relation(fields: [dentistId], references: [id], onDelete: Restrict)
+  treatmentId       Int
+  treatment         Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
+  createdAt         DateTime          @default(now())
+
   @@index([dentistId])
   @@index([treatmentId])
   @@index([date])
+  @@index([status])
 }

@@ -31,7 +31,7 @@ export async function createAppointment(input: CreateAppointmentInput) {
   }
 
   const [treatment, dentist] = await Promise.all([
-    prisma.treatment.findUnique({ where: { id: treatmentId } }),
+    prisma.treatment.findUnique({ where: { id: treatmentId, isActive: true } }),
     prisma.dentist.findUnique({ where: { id: dentistId, isActive: true } }),
   ]);
 
@@ -97,6 +97,10 @@ export async function createAppointment(input: CreateAppointmentInput) {
         time,
         comment: input.comment ?? null,
         status: 'CONFIRMED',
+        source: 'WEB',
+        // Protección de doble reserva a nivel de BD: la franja ocupada queda
+        // identificada de forma única; al cancelar se libera (conflictKey = null).
+        conflictKey: `${dentistId}:${date}:${time}`,
         dentistId,
         treatmentId,
       },

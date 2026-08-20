@@ -89,7 +89,7 @@ export async function getAvailability({
 
   const [dentist, treatment] = await Promise.all([
     prisma.dentist.findUnique({ where: { id: dentistId, isActive: true } }),
-    prisma.treatment.findUnique({ where: { id: treatmentId } }),
+    prisma.treatment.findUnique({ where: { id: treatmentId, isActive: true } }),
   ]);
 
   if (!dentist) {
@@ -137,6 +137,16 @@ export async function getAvailability({
     },
   );
 
+  // Bloqueos de agenda del profesional para esta fecha. Un slot se considera
+  // no disponible si solapa con una reserva existente O con un bloqueo.
+  const blocks = await prisma.timeBlock.findMany({
+    where: { dentistId, date },
+  });
+  const blocked: { start: number; end: number }[] = blocks.map((b) => ({
+    start: toMinutes(b.startTime),
+    end: toMinutes(b.endTime),
+  }));
+
   const today = localDateString();
   const nowMinutes = today === date ? currentMinutes() : -1;
 
@@ -145,9 +155,9 @@ export async function getAvailability({
   for (let start = open; start + duration <= close; start += SLOT_MINUTES) {
     if (nowMinutes >= 0 && start <= nowMinutes) continue;
     const end = start + duration;
-    const conflicts = booked.some(
-      (b) => overlaps(start, end, b.start, b.end),
-    );
+    const conflicts =
+      booked.some((b) => overlaps(start, end, b.start, b.end)) ||
+      blocked.some((t) => overlaps(start, end, t.start, t.end));
     if (!conflicts) slots.push(toTime(start));
   }
 

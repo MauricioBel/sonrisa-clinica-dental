@@ -13,6 +13,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint .",
+    "test": "node --import tsx --test tests/auth.test.ts tests/appointments-admin.test.ts tests/dentists-admin.test.ts tests/treatments-admin.test.ts tests/timeblocks.test.ts tests/regression.test.ts",
     "format": "prettier --write .",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",

@@ -13,7 +13,10 @@ export default tseslint.config(
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['prisma/seed.ts'],
+          allowDefaultProject: ['prisma/seed.ts', 'tests/*.ts', 'tests/*.test.ts'],
+          // Los tests y el seed no pertenecen a ningún tsconfig de .tsbuildinfo;
+          // ampliamos el tope por defecto (8) para que todos se linteen.
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 25,
         },
         tsconfigRootDir: import.meta.dirname,
       },

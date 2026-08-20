@@ -3,6 +3,7 @@ import { notFoundError } from '../utils/ApiError.js';
 
 export async function listTreatments() {
   return prisma.treatment.findMany({
+    where: { isActive: true },
     orderBy: { sortOrder: 'asc' },
   });
 }
@@ -11,7 +12,7 @@ export async function getTreatmentBySlug(slug: string) {
   const treatment = await prisma.treatment.findUnique({
     where: { slug },
   });
-  if (!treatment) {
+  if (!treatment || !treatment.isActive) {
     throw notFoundError('Tratamiento');
   }
   return treatment;

@@ -30,4 +30,8 @@ export const env = {
   // Nº de saltos de proxy de confianza para rate-limit/CORS. En desarrollo
   // (Vite proxya) es 0; tras un proxy reverso de producción suele ser 1.
   trustProxy: readNumber('TRUST_PROXY', 0),
+  // Secreto para firmar los tokens de sesión del panel administrativo.
+  authSecret: readString('AUTH_SECRET', 'dev-secret-change-me'),
+  // Vigencia del token de sesión en segundos (8 horas por defecto).
+  authTokenTtlSeconds: readNumber('AUTH_TOKEN_TTL_SECONDS', 8 * 60 * 60),
 } as const;

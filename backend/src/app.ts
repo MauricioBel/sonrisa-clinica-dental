@@ -14,6 +14,11 @@ import { treatmentsRouter } from './routes/treatments.routes.js';
 import { dentistsRouter } from './routes/dentists.routes.js';
 import { availabilityRouter } from './routes/availability.routes.js';
 import { appointmentsRouter } from './routes/appointments.routes.js';
+import { authRouter } from './routes/auth.routes.js';
+import { adminAppointmentsRouter } from './routes/admin/appointments.routes.js';
+import { adminDentistsRouter } from './routes/admin/dentists.routes.js';
+import { adminTimeBlocksRouter } from './routes/admin/timeblocks.routes.js';
+import { adminTreatmentsRouter } from './routes/admin/treatments.routes.js';
 
 export function createApp(): Express {
   const app = express();
@@ -42,8 +47,9 @@ export function createApp(): Express {
   app.use(
     cors({
       origin: env.corsOrigin,
-      methods: ['GET', 'POST', 'HEAD', 'OPTIONS'],
-      allowedHeaders: ['Content-Type'],
+      // PATCH/DELETE y el header Authorization se agregan para el panel admin.
+      methods: ['GET', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
       maxAge: 86400,
     }),
   );
@@ -52,10 +58,15 @@ export function createApp(): Express {
   app.use('/api', apiLimiter);
 
   app.use('/api/health', healthRouter);
+  app.use('/api/auth', authRouter);
   app.use('/api/treatments', treatmentsRouter);
   app.use('/api/dentists', dentistsRouter);
   app.use('/api/availability', availabilityRouter);
   app.use('/api/appointments', appointmentsRouter);
+  app.use('/api/admin/appointments', adminAppointmentsRouter);
+  app.use('/api/admin/dentists', adminDentistsRouter);
+  app.use('/api/admin/treatments', adminTreatmentsRouter);
+  app.use('/api/admin/timeblocks', adminTimeBlocksRouter);
 
   app.use(notFoundHandler);
   app.use(prismaErrorHandler);
