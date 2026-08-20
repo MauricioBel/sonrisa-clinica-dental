@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp' | 'danger';
 type Size = 'sm' | 'md' | 'lg';
 
 const base =
@@ -16,6 +16,7 @@ const variants: Record<Variant, string> = {
     'border border-brand-300 text-brand-800 bg-transparent hover:bg-brand-50',
   ghost: 'text-brand-800 hover:bg-brand-50',
   whatsapp: 'bg-[#167D3F] text-white hover:bg-[#137638] shadow-sm',
+  danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm',
 };
 
 const sizes: Record<Size, string> = {

@@ -34,6 +34,54 @@ const AppointmentConfirmationPage = lazy(() =>
 const NotFoundPage = lazy(() =>
   import('./pages/NotFoundPage.tsx').then((m) => ({ default: m.NotFoundPage })),
 );
+const AdminLoginPage = lazy(() =>
+  import('./pages/admin/AdminLoginPage.tsx').then((m) => ({
+    default: m.AdminLoginPage,
+  })),
+);
+const AdminLayout = lazy(() =>
+  import('./pages/admin/AdminLayout.tsx').then((m) => ({ default: m.AdminLayout })),
+);
+const AdminDashboardPage = lazy(() =>
+  import('./pages/admin/AdminDashboardPage.tsx').then((m) => ({
+    default: m.AdminDashboardPage,
+  })),
+);
+const AdminAppointmentsPage = lazy(() =>
+  import('./pages/admin/AdminAppointmentsPage.tsx').then((m) => ({
+    default: m.AdminAppointmentsPage,
+  })),
+);
+const AdminAppointmentDetailPage = lazy(() =>
+  import('./pages/admin/AdminAppointmentDetailPage.tsx').then((m) => ({
+    default: m.AdminAppointmentDetailPage,
+  })),
+);
+const AdminDentistsPage = lazy(() =>
+  import('./pages/admin/AdminDentistsPage.tsx').then((m) => ({
+    default: m.AdminDentistsPage,
+  })),
+);
+const AdminDentistFormPage = lazy(() =>
+  import('./pages/admin/AdminDentistFormPage.tsx').then((m) => ({
+    default: m.AdminDentistFormPage,
+  })),
+);
+const AdminTreatmentsPage = lazy(() =>
+  import('./pages/admin/AdminTreatmentsPage.tsx').then((m) => ({
+    default: m.AdminTreatmentsPage,
+  })),
+);
+const AdminTreatmentFormPage = lazy(() =>
+  import('./pages/admin/AdminTreatmentFormPage.tsx').then((m) => ({
+    default: m.AdminTreatmentFormPage,
+  })),
+);
+const AdminTimeBlocksPage = lazy(() =>
+  import('./pages/admin/AdminTimeBlocksPage.tsx').then((m) => ({
+    default: m.AdminTimeBlocksPage,
+  })),
+);
 
 export default function App() {
   return (
@@ -57,6 +105,20 @@ export default function App() {
             <Route path="/agendar-hora" element={<BookingPage />} />
             <Route path="/reserva/confirmacion/:id" element={<AppointmentConfirmationPage />} />
             <Route path="*" element={<NotFoundPage />} />
+          </Route>
+
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboardPage />} />
+            <Route path="citas" element={<AdminAppointmentsPage />} />
+            <Route path="citas/:id" element={<AdminAppointmentDetailPage />} />
+            <Route path="dentistas" element={<AdminDentistsPage />} />
+            <Route path="dentistas/nuevo" element={<AdminDentistFormPage />} />
+            <Route path="dentistas/:id/editar" element={<AdminDentistFormPage />} />
+            <Route path="tratamientos" element={<AdminTreatmentsPage />} />
+            <Route path="tratamientos/nuevo" element={<AdminTreatmentFormPage />} />
+            <Route path="tratamientos/:id/editar" element={<AdminTreatmentFormPage />} />
+            <Route path="bloqueos" element={<AdminTimeBlocksPage />} />
           </Route>
         </Routes>
       </Suspense>
