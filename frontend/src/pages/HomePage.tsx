@@ -128,7 +128,7 @@ export function HomePage() {
         description="En Sonrisa Clínica Dental combinamos tecnología de vanguardia con un equipo de especialistas para darte la mejor atención. Agenda tu primera consulta hoy."
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 sm:py-14">
         <SectionTitle
           eyebrow="Beneficios"
           title="Cuidamos cada detalle de tu sonrisa"
@@ -151,7 +151,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-brand-50 py-16">
+      <section className="bg-brand-50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Tratamientos"
@@ -173,7 +173,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 sm:py-14">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div>
             <SectionTitle
@@ -238,7 +238,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-brand-50 py-16">
+      <section className="bg-brand-50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Testimonios"
@@ -267,8 +267,8 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 p-8 text-center text-white shadow-lg sm:p-12">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 sm:py-14">
+        <div className="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 p-6 text-center text-white shadow-lg sm:p-10">
           <CalendarCheck className="mx-auto h-12 w-12 text-brand-200" aria-hidden="true" />
           <h2 className="mt-4 font-display text-3xl font-bold">¿Listo para tu consulta?</h2>
           <p className="mx-auto mt-3 max-w-xl text-brand-100">
@@ -284,7 +284,7 @@ export function HomePage() {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white hover:bg-[#137638]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white hover:bg-[#137638] min-h-[48px]"
             >
               Consultar por WhatsApp
             </a>

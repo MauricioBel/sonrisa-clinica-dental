@@ -45,7 +45,7 @@ export function Navbar() {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#1f7a5c] transition-colors hover:bg-[#e0f2e9]"
+            className="inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-[#1f7a5c] transition-colors hover:bg-[#e0f2e9] min-h-[44px]"
           >
             WhatsApp
           </a>
@@ -95,7 +95,7 @@ export function Navbar() {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-300 px-4 py-2.5 text-sm font-semibold text-brand-800 hover:bg-brand-50"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-300 px-4 py-3 text-sm font-semibold text-brand-800 hover:bg-brand-50 min-h-[44px]"
               >
                 WhatsApp
               </a>

@@ -319,7 +319,7 @@ export function BookingPage() {
         path="/agendar-hora"
       />
 
-      <section className="bg-brand-50 py-10">
+      <section className="bg-brand-50 py-8 sm:py-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             level="h1"
@@ -330,7 +330,7 @@ export function BookingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 sm:py-10">
         <p className="sr-only" role="status" aria-live="polite">
           Paso {step} de {STEPS.length}: {STEPS[step - 1]?.label}
         </p>

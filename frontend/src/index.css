@@ -31,3 +31,37 @@ body {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .container-mobile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  section.py-16 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  
+  section.py-20 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  section.py-28 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}

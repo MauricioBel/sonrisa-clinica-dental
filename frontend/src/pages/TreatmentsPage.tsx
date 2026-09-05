@@ -16,7 +16,7 @@ export function TreatmentsPage() {
         path="/tratamientos"
       />
 
-      <section className="bg-brand-50 py-14">
+      <section className="bg-brand-50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             level="h1"
@@ -35,11 +35,11 @@ export function TreatmentsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 sm:py-14">
         <TreatmentList treatments={data} loading={loading} error={error} />
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8 sm:pb-14">
         <div className="rounded-2xl bg-brand-50 p-8 text-center sm:p-10">
           <h2 className="font-display text-2xl font-bold text-brand-950">
             ¿No sabes qué tratamiento necesitas?

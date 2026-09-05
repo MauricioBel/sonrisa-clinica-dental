@@ -19,7 +19,7 @@ export function Hero({ eyebrow, title, description }: HeroProps) {
         }}
         aria-hidden="true"
       />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
         <div className="max-w-2xl">
           <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-700 shadow-sm ring-1 ring-brand-200">
             <span className="h-2 w-2 rounded-full bg-brand-500" aria-hidden="true" />
@@ -67,7 +67,7 @@ export function CTABand({ title, description }: CTABandProps) {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#137638]"
+            className="inline-flex items-center justify-center rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#137638] min-h-[48px]"
           >
             WhatsApp
           </a>

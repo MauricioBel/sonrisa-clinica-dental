@@ -34,7 +34,7 @@ export function Footer() {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#167D3F] px-4 py-2 text-sm font-semibold text-white hover:bg-[#137638]"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#167D3F] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#137638] min-h-[44px]"
             >
               Escríbenos por WhatsApp
             </a>

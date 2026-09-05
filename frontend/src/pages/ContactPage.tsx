@@ -53,7 +53,7 @@ export function ContactPage() {
         path="/contacto"
       />
 
-      <section className="bg-brand-50 py-14">
+      <section className="bg-brand-50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             level="h1"
@@ -64,7 +64,7 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 sm:py-14">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="font-display text-2xl font-bold text-brand-950">
@@ -145,7 +145,7 @@ export function ContactPage() {
 
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#137638] sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#137638] sm:w-auto min-h-[48px]"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden="true" />
                 Enviar por WhatsApp
