@@ -17,7 +17,7 @@ import { useDentists } from '../hooks/useDentists.ts';
 import { Seo } from '../components/Seo.tsx';
 import { Card } from '../components/ui/Card.tsx';
 import { Button } from '../components/ui/Button.tsx';
-import { WHATSAPP_LINK } from '../lib/constants.ts';
+import { useWhatsApp, useClinicaInfo } from '../hooks/useConfig.ts';
 
 const BENEFITS = [
   {
@@ -82,6 +82,8 @@ const TESTIMONIALS = [
 export function HomePage() {
   const treatments = useTreatments();
   const dentists = useDentists();
+  const { link: whatsappLink } = useWhatsApp();
+  const { nombre, telefono, horario } = useClinicaInfo();
 
   const featuredTreatments = (treatments.data ?? [])
     .filter((t) => t.isFeatured)
@@ -92,10 +94,10 @@ export function HomePage() {
   const localBusinessJsonLd = {
     '@context': 'https://schema.org',
     '@type': ['Dentist', 'LocalBusiness'],
-    name: 'Sonrisa Clínica Dental',
+    name: nombre || 'Sonrisa Clínica Dental',
     image: `${import.meta.env.VITE_SITE_URL ?? 'http://localhost:5173'}/og-image.png`,
     url: `${import.meta.env.VITE_SITE_URL ?? 'http://localhost:5173'}/`,
-    telephone: '+56987654321',
+    telephone: telefono?.replace(/\s/g, '') || '+56987654321',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Av. Providencia 1234, of. 502',
@@ -104,8 +106,8 @@ export function HomePage() {
       addressCountry: 'CL',
     },
     priceRange: '$$',
-    openingHours: 'Mo-Fr 09:00-19:00, Sa 09:00-14:00',
-    sameAs: [WHATSAPP_LINK],
+    openingHours: horario?.map((h: { dias: string; horas: string }) => `${h.dias} ${h.horas}`).join(', ') || 'Mo-Fr 09:00-19:00, Sa 09:00-14:00',
+    sameAs: [whatsappLink],
   };
 
   return (
@@ -281,7 +283,7 @@ export function HomePage() {
               Agendar hora online
             </Button>
             <a
-              href={WHATSAPP_LINK}
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white hover:bg-[#137638] min-h-[48px]"

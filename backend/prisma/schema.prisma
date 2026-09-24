@@ -2,12 +2,12 @@
 // Documentación: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider  = "postgresql"
 }
 
 /// Estado del ciclo de vida de una reserva.
@@ -21,16 +21,16 @@ enum AppointmentStatus {
 }
 
 model Dentist {
-  id              Int              @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
   role            String
   specialty       String
   description     String
   experienceYears Int
   imageUrl        String
-  isActive        Boolean          @default(true)
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  isActive        Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
   appointments    Appointment[]
   businessHours   BusinessHours[]
 
@@ -71,7 +71,7 @@ model BusinessHours {
 }
 
 /// Reserva de una hora. `date` usa formato YYYY-MM-DD y `time` HH:mm.
-/// El par único (dentistId, date, time) impide reservas duplicadas en la BD.
+/// El par único (dentistId, date, time, clinicaId) impide reservas duplicadas en la BD por clínica.
 model Appointment {
   id              Int               @id @default(autoincrement())
   patientName     String
@@ -86,10 +86,37 @@ model Appointment {
   dentist         Dentist           @relation(fields: [dentistId], references: [id], onDelete: Restrict)
   treatmentId     Int
   treatment       Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
+  clinicaId       String
+  clinica         Clinica           @relation(fields: [clinicaId], references: [id], onDelete: Restrict)
   createdAt       DateTime          @default(now())
 
-  @@unique([dentistId, date, time])
+  @@unique([dentistId, date, time, clinicaId])
   @@index([dentistId])
   @@index([treatmentId])
   @@index([date])
+  @@index([clinicaId])
+}
+
+model Clinica {
+  id           String        @id @default(dbgenerated("gen_random_uuid()"))
+  nombre       String
+  slug         String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+  admins       AdminUser[]
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  clinicaId String
+  clinica   Clinica  @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([clinicaId, email])
+  @@index([clinicaId])
 }

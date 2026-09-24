@@ -20,6 +20,7 @@ import { useTreatments } from '../hooks/useTreatments.ts';
 import { useDentists } from '../hooks/useDentists.ts';
 import { useAvailability } from '../hooks/useAvailability.ts';
 import { api, ApiError } from '../lib/api.ts';
+import { useClinicaId } from '../hooks/useConfig.ts';
 import {
   dayNameShort,
   dayOfWeekFromISO,
@@ -173,6 +174,7 @@ export function BookingPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const initialSlug = searchParams.get('tratamiento');
+  const clinicaId = useClinicaId();
 
   const { data: treatments, loading: treatmentsLoading, error: treatmentsError } = useTreatments();
   const { data: dentists, loading: dentistsLoading, error: dentistsError } = useDentists();
@@ -285,6 +287,7 @@ export function BookingPage() {
         date,
         time,
         comment: data.comment || null,
+        clinicaId,
       });
       setReserved(true);
       navigate(`/reserva/confirmacion/${result.id}`);
@@ -596,6 +599,7 @@ export function BookingPage() {
                 className="mt-6 grid gap-4 sm:grid-cols-2"
                 noValidate
               >
+                <input type="hidden" name="clinicaId" value={clinicaId} />
                 <div>
                   <label htmlFor="patient-name" className="mb-1.5 block text-sm font-medium text-slate-700">
                     Nombre
@@ -604,7 +608,7 @@ export function BookingPage() {
                     id="patient-name"
                     type="text"
                     autoComplete="given-name"
-                    className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                    className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                     placeholder="Ej: María"
                     {...form.register('patientName')}
                     aria-invalid={form.formState.errors.patientName ? true : undefined}
@@ -627,7 +631,7 @@ export function BookingPage() {
                     id="patient-lastname"
                     type="text"
                     autoComplete="family-name"
-                    className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                    className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                     placeholder="Ej: Pérez"
                     {...form.register('patientLastName')}
                     aria-invalid={form.formState.errors.patientLastName ? true : undefined}
@@ -651,7 +655,7 @@ export function BookingPage() {
                     type="email"
                     autoComplete="email"
                     inputMode="email"
-                    className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                    className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                     placeholder="tucorreo@ejemplo.cl"
                     {...form.register('patientEmail')}
                     aria-invalid={form.formState.errors.patientEmail ? true : undefined}
@@ -675,7 +679,7 @@ export function BookingPage() {
                     type="tel"
                     autoComplete="tel"
                     inputMode="tel"
-                    className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                    className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                     placeholder="+56 9 1234 5678"
                     {...form.register('patientPhone')}
                     aria-invalid={form.formState.errors.patientPhone ? true : undefined}
@@ -697,7 +701,7 @@ export function BookingPage() {
                   <textarea
                     id="patient-comment"
                     rows={4}
-                    className="w-full resize-y rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                    className="input-field w-full resize-y px-4 py-2.5 text-sm outline-none transition"
                     placeholder="Cuéntanos si tienes alguna preferencia o duda"
                     {...form.register('comment')}
                     aria-invalid={form.formState.errors.comment ? true : undefined}

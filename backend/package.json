@@ -20,13 +20,17 @@
     "seed": "prisma db seed"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.9.1",
-    "@prisma/client": "^7.9.1",
+    "@google/generative-ai": "^0.24.1",
+    "@prisma/adapter-better-sqlite3": "^7.10.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.2",
+    "express-session": "^1.19.0",
     "helmet": "^8.3.0",
+    "openai": "^7.23.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -34,14 +38,19 @@
     "@types/better-sqlite3": "^9.6.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
     "@types/node": "^26.2.0",
     "better-sqlite3": "^13.0.3",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.6",
-    "prisma": "^7.9.1",
+    "prisma": "^7.10.0",
     "tsx": "^4.23.12",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0"
+  },
+  "overrides": {
+    "deepmerge-ts": ">=8.0.0",
+    "mysql2": ">=3.23.1"
   }
 }

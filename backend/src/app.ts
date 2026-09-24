@@ -2,6 +2,7 @@ import express from 'express';
 import type { Express } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import session from 'express-session';
 import { env } from './config/env.js';
 import { apiLimiter } from './middleware/rateLimit.js';
 import {
@@ -14,6 +15,8 @@ import { treatmentsRouter } from './routes/treatments.routes.js';
 import { dentistsRouter } from './routes/dentists.routes.js';
 import { availabilityRouter } from './routes/availability.routes.js';
 import { appointmentsRouter } from './routes/appointments.routes.js';
+import { adminRouter } from './routes/admin.routes.js';
+import { chatRouter } from './routes/chat.routes.js';
 
 export function createApp(): Express {
   const app = express();
@@ -49,6 +52,19 @@ export function createApp(): Express {
   );
   app.use(express.json({ limit: '50kb' }));
 
+  app.use(
+    session({
+      secret: env.sessionSecret,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: env.nodeEnv === 'production',
+        maxAge: 1000 * 60 * 60 * 8,
+      },
+    })
+  );
+
   app.use('/api', apiLimiter);
 
   app.use('/api/health', healthRouter);
@@ -56,6 +72,8 @@ export function createApp(): Express {
   app.use('/api/dentists', dentistsRouter);
   app.use('/api/availability', availabilityRouter);
   app.use('/api/appointments', appointmentsRouter);
+  app.use('/api/admin', adminRouter);
+  app.use('/api/chat', chatRouter);
 
   app.use(notFoundHandler);
   app.use(prismaErrorHandler);

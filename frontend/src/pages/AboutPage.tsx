@@ -3,7 +3,7 @@ import { Seo } from '../components/Seo.tsx';
 import { SectionTitle } from '../components/ui/SectionTitle.tsx';
 import { Card } from '../components/ui/Card.tsx';
 import { Button } from '../components/ui/Button.tsx';
-import { WHATSAPP_LINK } from '../lib/constants.ts';
+import { useWhatsApp } from '../hooks/useConfig.ts';
 
 const VALUES = [
   {
@@ -32,6 +32,7 @@ const MILESTONES = [
 ];
 
 export function AboutPage() {
+  const { link: whatsappLink } = useWhatsApp();
   return (
     <>
       <Seo
@@ -96,7 +97,7 @@ export function AboutPage() {
               Conocer al equipo
             </Button>
             <a
-              href={WHATSAPP_LINK}
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-lg bg-[#167D3F] px-6 py-3 text-base font-semibold text-white hover:bg-[#137638]"

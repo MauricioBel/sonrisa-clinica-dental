@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { CalendarCheck, Menu, X } from 'lucide-react';
 import { Logo } from './Logo.tsx';
 import { Button } from '../ui/Button.tsx';
-import { WHATSAPP_LINK } from '../../lib/constants.ts';
+import { useWhatsApp } from '../../hooks/useConfig.ts';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Inicio' },
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const { link: whatsappLink } = useWhatsApp();
 
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
@@ -42,7 +43,7 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <a
-            href={WHATSAPP_LINK}
+            href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold text-[#1f7a5c] transition-colors hover:bg-[#e0f2e9] min-h-[44px]"
@@ -92,7 +93,7 @@ export function Navbar() {
                 Agendar hora
               </Button>
               <a
-                href={WHATSAPP_LINK}
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-300 px-4 py-3 text-sm font-semibold text-brand-800 hover:bg-brand-50 min-h-[44px]"

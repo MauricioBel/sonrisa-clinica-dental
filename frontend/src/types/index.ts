@@ -80,6 +80,7 @@ export interface CreateAppointmentPayload {
   date: string;
   time: string;
   comment?: string | null;
+  clinicaId: string;
 }
 
 export interface CreateAppointmentResponse {

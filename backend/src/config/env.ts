@@ -25,9 +25,8 @@ export const env = {
   corsOrigin: readOriginList('CORS_ORIGIN', ['http://localhost:5173']),
   databaseUrl: readString(
     'DATABASE_URL',
-    'file:./dev.db',
+    'postgresql://postgres:postgres@localhost:5432/sonrisa_dental?schema=public',
   ),
-  // Nº de saltos de proxy de confianza para rate-limit/CORS. En desarrollo
-  // (Vite proxya) es 0; tras un proxy reverso de producción suele ser 1.
+  sessionSecret: readString('SESSION_SECRET', 'dev-secret-change-in-production'),
   trustProxy: readNumber('TRUST_PROXY', 0),
 } as const;

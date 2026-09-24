@@ -1,20 +1,15 @@
 import { PrismaClient } from '../src/generated/prisma/client.js';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function resolveDbFile(): string {
-  const raw = process.env.DATABASE_URL ?? 'file:./dev.db';
-  const file = raw.replace(/^file:/, '');
-  if (path.isAbsolute(file)) return file;
-  // En runtime (tsx) el cwd es backend/; el archivo se resuelve relativo a él.
-  return path.resolve(process.cwd(), file);
+function hashPassword(password: string): string {
+  return createHash('sha256').update(password).digest('hex');
 }
 
-const adapter = new PrismaBetterSqlite3({ url: `file:${resolveDbFile()}` });
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 function iso(d: Date): string {
   const y = d.getFullYear();
@@ -329,6 +324,7 @@ async function main() {
         status: 'CONFIRMED',
         dentistId: e.dentistId,
         treatmentId: e.treatmentId,
+        clinicaId: 'sonrisa-clinica-dental-001',
       },
     });
   }
@@ -341,6 +337,20 @@ async function main() {
   };
 
   console.log('Seed completado:', counts);
+
+  // Crear usuario admin por defecto
+  console.log('Creando usuario admin...');
+  await prisma.adminUser.upsert({
+    where: { email: 'admin@sonrisadental.cl' },
+    update: {},
+    create: {
+      email: 'admin@sonrisadental.cl',
+      password: hashPassword('admin123'),
+      nombre: 'Administrador',
+      clinicaId: 'sonrisa-clinica-dental-001',
+    },
+  });
+  console.log('Usuario admin creado: admin@sonrisadental.cl / admin123');
 }
 
 main()

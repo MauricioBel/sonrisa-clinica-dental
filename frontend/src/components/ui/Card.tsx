@@ -5,7 +5,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function Card({ className = '', interactive = false, ...props }: CardProps) {
-  const base = 'rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/70';
+  const base = 'card';
   const interactiveClasses = interactive
     ? 'transition hover:shadow-md hover:-translate-y-0.5'
     : '';

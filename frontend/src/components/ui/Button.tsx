@@ -6,16 +6,14 @@ type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
 type Size = 'sm' | 'md' | 'lg';
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-150 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60';
+  'inline-flex items-center justify-center gap-2 font-semibold transition-colors duration-150 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60';
 
 const variants: Record<Variant, string> = {
-  primary:
-    'bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900 shadow-sm',
-  secondary: 'bg-brand-100 text-brand-900 hover:bg-brand-200',
-  outline:
-    'border border-brand-300 text-brand-800 bg-transparent hover:bg-brand-50',
-  ghost: 'text-brand-800 hover:bg-brand-50',
-  whatsapp: 'bg-[#167D3F] text-white hover:bg-[#137638] shadow-sm',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  outline: 'btn-outline',
+  ghost: 'btn-ghost',
+  whatsapp: 'btn-whatsapp',
 };
 
 const sizes: Record<Size, string> = {
@@ -33,9 +31,7 @@ type BaseButtonProps = {
 };
 
 type ButtonAsButton = BaseButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
-
 type ButtonAsLink = BaseButtonProps & { to: string };
-
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 export function Button(props: ButtonProps) {

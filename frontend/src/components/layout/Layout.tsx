@@ -3,6 +3,7 @@ import { Navbar } from './Navbar.tsx';
 import { Footer } from './Footer.tsx';
 import { WhatsAppFloat } from './WhatsAppFloat.tsx';
 import { ScrollToTop } from './ScrollToTop.tsx';
+import { ChatbotWidget } from '../ui/ChatbotWidget.tsx';
 
 export function Layout() {
   return (
@@ -20,6 +21,7 @@ export function Layout() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <ChatbotWidget />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import type {
   Dentist,
   Treatment,
 } from '../types/index.ts';
+import { getClinicaId } from '../lib/config.ts';
 
 export class ApiError extends Error {
   readonly status: number;
@@ -77,7 +78,10 @@ export const api = {
   createAppointment: (payload: CreateAppointmentPayload) =>
     request<CreateAppointmentResponse>('/api/appointments', {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        clinicaId: payload.clinicaId || getClinicaId(),
+      }),
     }),
   getAppointment: (id: number) =>
     request<Appointment>(`/api/appointments/${id}`),

@@ -20,7 +20,7 @@ function isValidTime(time: string): boolean {
  * - Usa una transacción y confía en el índice único (dentistId, date, time).
  */
 export async function createAppointment(input: CreateAppointmentInput) {
-  const { treatmentId, dentistId, date, time } = input;
+  const { treatmentId, dentistId, date, time, clinicaId } = input;
 
   if (!isValidTime(time)) {
     throw new ApiError(
@@ -69,6 +69,7 @@ export async function createAppointment(input: CreateAppointmentInput) {
       where: {
         dentistId,
         date,
+        clinicaId: clinicaId ?? 'default',
         status: { in: ['PENDING', 'CONFIRMED'] },
       },
       include: { treatment: { select: { durationMinutes: true } } },
@@ -99,6 +100,7 @@ export async function createAppointment(input: CreateAppointmentInput) {
         status: 'CONFIRMED',
         dentistId,
         treatmentId,
+        clinicaId: clinicaId ?? 'default',
       },
       include: {
         dentist: true,

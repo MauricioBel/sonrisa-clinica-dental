@@ -36,6 +36,7 @@ export const createAppointmentSchema = z.object({
     .max(500, 'El comentario no puede superar 500 caracteres')
     .optional()
     .nullable(),
+  clinicaId: z.string().min(1, 'clinicaId es requerido').optional(),
 });
 
 export type CreateAppointmentInput = z.infer<typeof createAppointmentSchema>;
@@ -65,3 +66,28 @@ export const idParamSchema = z.object({
 });
 
 export type IdParam = z.infer<typeof idParamSchema>;
+
+export const adminLoginSchema = z.object({
+  email: z.string().trim().email('Email inválido'),
+  password: z.string().min(1, 'Contraseña requerida'),
+});
+
+export type AdminLoginInput = z.infer<typeof adminLoginSchema>;
+
+export const updateAppointmentStatusSchema = z.object({
+  status: z.enum(['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED']),
+});
+
+export type UpdateAppointmentStatusInput = z.infer<typeof updateAppointmentStatusSchema>;
+
+export const adminAppointmentsQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1).optional(),
+  limit: z.coerce.number().int().positive().max(100).default(50).optional(),
+  status: z.enum(['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED']).optional(),
+  dateFrom: z.string().regex(dateRegex).optional(),
+  dateTo: z.string().regex(dateRegex).optional(),
+  dentistId: z.coerce.number().int().positive().optional(),
+  treatmentId: z.coerce.number().int().positive().optional(),
+});
+
+export type AdminAppointmentsQuery = z.infer<typeof adminAppointmentsQuerySchema>;

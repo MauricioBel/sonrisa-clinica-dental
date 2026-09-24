@@ -6,13 +6,7 @@ import { Seo } from '../components/Seo.tsx';
 import { SectionTitle } from '../components/ui/SectionTitle.tsx';
 import { Card } from '../components/ui/Card.tsx';
 import { BusinessHours } from '../components/BusinessHours.tsx';
-import {
-  BUSINESS_HOURS,
-  CLINIC_ADDRESS,
-  CLINIC_EMAIL,
-  CLINIC_PHONE,
-  WHATSAPP_DISPLAY,
-} from '../lib/constants.ts';
+import { useClinicaInfo, useWhatsApp } from '../hooks/useConfig.ts';
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, 'Ingresa tu nombre'),
@@ -30,6 +24,9 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>;
 
 export function ContactPage() {
+  const { direccion, telefono, email, horario } = useClinicaInfo();
+  const { numero: whatsappNumero } = useWhatsApp();
+
   const {
     register,
     handleSubmit,
@@ -42,7 +39,7 @@ export function ContactPage() {
     const text = encodeURIComponent(
       `Hola, soy ${data.name} (${data.phone}).\n\n${data.message}`,
     );
-    window.open(`https://wa.me/${WHATSAPP_DISPLAY.replace(/\D/g, '')}?text=${text}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumero}?text=${text}`, '_blank');
   };
 
   return (
@@ -88,7 +85,7 @@ export function ContactPage() {
                   id="contact-name"
                   type="text"
                   autoComplete="name"
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                  className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                   placeholder="Ej: María Pérez"
                   {...register('name')}
                   aria-invalid={errors.name ? true : undefined}
@@ -110,7 +107,7 @@ export function ContactPage() {
                   type="tel"
                   autoComplete="tel"
                   inputMode="tel"
-                  className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                  className="input-field w-full px-4 py-2.5 text-sm outline-none transition"
                   placeholder="+56 9 1234 5678"
                   {...register('phone')}
                   aria-invalid={errors.phone ? true : undefined}
@@ -130,7 +127,7 @@ export function ContactPage() {
                 <textarea
                   id="contact-message"
                   rows={5}
-                  className="w-full resize-y rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                  className="input-field w-full resize-y px-4 py-2.5 text-sm outline-none transition"
                   placeholder="Cuéntanos en qué podemos ayudarte"
                   {...register('message')}
                   aria-invalid={errors.message ? true : undefined}
@@ -159,18 +156,18 @@ export function ContactPage() {
               <ul className="mt-4 space-y-3 text-sm">
                 <li className="flex items-start gap-3">
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
-                  <span>{CLINIC_ADDRESS}</span>
+                  <span>{direccion}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone className="h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
-                  <a href={`tel:${CLINIC_PHONE.replace(/\s/g, '')}`} className="hover:text-brand-800">
-                    {CLINIC_PHONE}
+                  <a href={`tel:${telefono.replace(/\s/g, '')}`} className="hover:text-brand-800">
+                    {telefono}
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
                   <Mail className="h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
-                  <a href={`mailto:${CLINIC_EMAIL}`} className="hover:text-brand-800">
-                    {CLINIC_EMAIL}
+                  <a href={`mailto:${email}`} className="hover:text-brand-800">
+                    {email}
                   </a>
                 </li>
               </ul>
@@ -178,7 +175,7 @@ export function ContactPage() {
 
             <Card className="p-6">
               <h2 className="font-display text-lg font-bold text-brand-950">Horarios de atención</h2>
-              <BusinessHours hours={BUSINESS_HOURS} />
+              <BusinessHours hours={horario.map((h) => ({ days: h.dias, hours: h.horas }))} />
             </Card>
 
             <Card className="bg-brand-900 p-6 text-white">
@@ -186,7 +183,7 @@ export function ContactPage() {
                 <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-brand-300">
                   Dirección
                 </span>
-                <p className="text-sm text-brand-100">{CLINIC_ADDRESS}</p>
+                <p className="text-sm text-brand-100">{direccion}</p>
               </div>
               <div className="mt-4">
                 <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-brand-300">

@@ -1,0 +1,42 @@
+{
+  "theme": "classic",
+  "clinica_id": "sonrisa-clinica-dental-001",
+  "clinica": {
+    "nombre": "Sonrisa Clínica Dental",
+    "slogan": "Tu sonrisa es nuestra prioridad",
+    "telefono": "+56 2 2345 6789",
+    "email": "contacto@sonrisadental.cl",
+    "direccion": "Av. Providencia 1234, oficina 502, Providencia, Santiago de Chile",
+    "horario": [
+      { "dias": "Lunes a Viernes", "horas": "09:00 a 19:00 hrs" },
+      { "dias": "Sábado", "horas": "09:00 a 14:00 hrs" },
+      { "dias": "Domingo", "horas": "Cerrado" }
+    ],
+    "whatsapp": {
+      "numero": "56987654321",
+      "display": "+56 9 8765 4321",
+      "mensajeDefault": "Hola, quisiera consultar por una hora en Sonrisa Clínica Dental."
+    }
+  },
+  "identidadVisual": {
+    "colorPrincipal": "#1c5f82",
+    "colorSecundario": "#2b8fbe",
+    "logoUrl": "/images/logo.svg"
+  },
+  "servicios": [
+    { "nombre": "Limpieza Dental", "descripcionCorta": "Profilaxis completa para eliminar sarro y placa bacteriana." },
+    { "nombre": "Blanqueamiento Dental", "descripcionCorta": "Aclara el tono de tus dientes de forma segura y efectiva." },
+    { "nombre": "Implantes Dentales", "descripcionCorta": "Reemplaza piezas ausentes con implantes de titanio de última generación." },
+    { "nombre": "Ortodoncia", "descripcionCorta": "Alinea tus dientes con brackets o alineadores transparentes." },
+    { "nombre": "Carillas Dentales", "descripcionCorta": "Láminas ultrafinas de porcelana para una sonrisa perfecta." },
+    { "nombre": "Odontopediatría", "descripcionCorta": "Cuidado dental especializado para niños y adolescentes." },
+    { "nombre": "Endodoncia", "descripcionCorta": "Tratamiento de conducto para salvar dientes dañados." },
+    { "nombre": "Diseño de Sonrisa", "descripcionCorta": "Plan estético personalizado para transformar tu sonrisa." }
+  ],
+  "especialistas": [
+    { "nombre": "Dra. Valentina Rojas", "especialidad": "Implantes dentales y Cirugía bucal" },
+    { "nombre": "Dr. Sebastián Fuentes", "especialidad": "Ortodoncia y Alineadores invisibles" },
+    { "nombre": "Dra. Camila Torres", "especialidad": "Odontología restauradora y estética" },
+    { "nombre": "Dr. Andrés Muñoz", "especialidad": "Odontopediatría y Endodoncia" }
+  ]
+}
