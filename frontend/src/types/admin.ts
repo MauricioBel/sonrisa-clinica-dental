@@ -4,6 +4,7 @@ export interface AdminUser {
   nombre: string;
   clinicaId: string;
   clinicaNombre: string;
+  role: 'ADMIN' | 'DENTIST' | 'RECEPTION';
 }
 
 export interface AdminAppointment {
