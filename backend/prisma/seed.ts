@@ -1,15 +1,22 @@
-import { PrismaClient } from '../src/generated/prisma/client.js';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import 'dotenv/config';
+import { PrismaClient } from '../src/generated/prisma/index.js';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 import { createHash } from 'node:crypto';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+console.log('DATABASE_URL detectada:', process.env.DATABASE_URL ? 'SÍ (Cargada)' : 'NO (Falta .env)');
+
+const pool = new pg.Pool({ 
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 function hashPassword(password: string): string {
   return createHash('sha256').update(password).digest('hex');
 }
-
-const prisma = new PrismaClient();
 
 function iso(d: Date): string {
   const y = d.getFullYear();
@@ -40,7 +47,17 @@ async function main() {
   await prisma.businessHours.deleteMany();
   await prisma.treatment.deleteMany();
   await prisma.dentist.deleteMany();
+  await prisma.clinica.deleteMany();
 
+  console.log('Creando clínica...');
+  await prisma.clinica.create({
+    data: {
+      id: 'sonrisa-clinica-dental-001',
+      nombre: 'Sonrisa Clínica Dental',
+      slug: 'sonrisa-clinica-dental',
+    },
+  });
+  
   console.log('Creando dentistas...');
   const valentina = await prisma.dentist.create({
     data: {

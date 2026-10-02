@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout } from './components/layout/Layout.tsx';
 import { HomePage } from './pages/HomePage.tsx';
 import { Spinner } from './components/ui/Feedback.tsx';
@@ -7,6 +8,15 @@ import { ConfigProvider } from './context/ConfigContext.tsx';
 import { AdminAuthProvider } from './context/AdminAuthContext.tsx';
 import { ProtectedRoute } from './components/auth/ProtectedRoute.tsx';
 import { AdminLayout } from './components/layout/AdminLayout.tsx';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    },
+  },
+});
 
 // Code-splitting: Home se carga eager (LCP); el resto bajo demanda.
 const TreatmentsPage = lazy(() =>
@@ -52,40 +62,42 @@ const AdminAppointmentsPage = lazy(() =>
 
 export default function App() {
   return (
-    <ConfigProvider>
-      <AdminAuthProvider>
-        <BrowserRouter>
-          <Suspense
-            fallback={
-              <div className="min-h-[50vh]">
-                <Spinner label="Cargando página..." />
-              </div>
-            }
-          >
-            <Routes>
-              <Route element={<Layout />}>
-                <Route index element={<HomePage />} />
-                <Route path="/tratamientos" element={<TreatmentsPage />} />
-                <Route path="/tratamientos/:slug" element={<TreatmentDetailPage />} />
-                <Route path="/nosotros" element={<AboutPage />} />
-                <Route path="/equipo" element={<TeamPage />} />
-                <Route path="/preguntas-frecuentes" element={<FaqPage />} />
-                <Route path="/contacto" element={<ContactPage />} />
-                <Route path="/agendar-hora" element={<BookingPage />} />
-                <Route path="/reserva/confirmacion/:id" element={<AppointmentConfirmationPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-              <Route path="/admin/login" element={<AdminLoginPage />} />
-              <Route element={<ProtectedRoute />}>
-                <Route element={<AdminLayout />}>
-                  <Route path="/admin" element={<DashboardPage />} />
-                  <Route path="/admin/citas" element={<AdminAppointmentsPage />} />
+    <QueryClientProvider client={queryClient}>
+      <ConfigProvider>
+        <AdminAuthProvider>
+          <BrowserRouter>
+            <Suspense
+              fallback={
+                <div className="min-h-[50vh]">
+                  <Spinner label="Cargando página..." />
+                </div>
+              }
+            >
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route index element={<HomePage />} />
+                  <Route path="/tratamientos" element={<TreatmentsPage />} />
+                  <Route path="/tratamientos/:slug" element={<TreatmentDetailPage />} />
+                  <Route path="/nosotros" element={<AboutPage />} />
+                  <Route path="/equipo" element={<TeamPage />} />
+                  <Route path="/preguntas-frecuentes" element={<FaqPage />} />
+                  <Route path="/contacto" element={<ContactPage />} />
+                  <Route path="/agendar-hora" element={<BookingPage />} />
+                  <Route path="/reserva/confirmacion/:id" element={<AppointmentConfirmationPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Route>
-              </Route>
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </AdminAuthProvider>
-    </ConfigProvider>
+                <Route path="/admin/login" element={<AdminLoginPage />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route element={<AdminLayout />}>
+                    <Route path="/admin" element={<DashboardPage />} />
+                    <Route path="/admin/citas" element={<AdminAppointmentsPage />} />
+                  </Route>
+                </Route>
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </AdminAuthProvider>
+      </ConfigProvider>
+    </QueryClientProvider>
   );
 }

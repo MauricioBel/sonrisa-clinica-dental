@@ -7,7 +7,11 @@ export const treatmentsRouter = Router();
 treatmentsRouter.get(
   '/',
   asyncHandler(async (_req, res) => {
+    console.time('🚀 [HTTP] GET /api/treatments');
+
     const treatments = await listTreatments();
+
+    console.timeEnd('🚀 [HTTP] GET /api/treatments');
     res.json({ data: treatments });
   }),
 );

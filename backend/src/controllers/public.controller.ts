@@ -2,9 +2,25 @@ import { prisma } from '../lib/prisma.js';
 import { notFoundError } from '../utils/ApiError.js';
 
 export async function listTreatments() {
-  return prisma.treatment.findMany({
+  console.time('⏱️ [BD] Consulta listTreatments'); // 👈 Inicio de medición
+
+  const treatments = await prisma.treatment.findMany({
     orderBy: { sortOrder: 'asc' },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      shortDescription: true,
+      price: true,
+      durationMinutes: true,
+      imageUrl: true,
+      isFeatured: true,
+      sortOrder: true,
+    },
   });
+
+  console.timeEnd('⏱️ [BD] Consulta listTreatments'); // 👈 Fin de medición
+  return treatments;
 }
 
 export async function getTreatmentBySlug(slug: string) {

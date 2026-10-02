@@ -48,6 +48,7 @@ export function createApp(): Express {
       methods: ['GET', 'POST', 'HEAD', 'OPTIONS'],
       allowedHeaders: ['Content-Type'],
       maxAge: 86400,
+      credentials: true,
     }),
   );
   app.use(express.json({ limit: '50kb' }));

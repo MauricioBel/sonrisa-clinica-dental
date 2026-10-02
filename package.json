@@ -4,5 +4,9 @@
   },
   "devDependencies": {
     "concurrently": "^10.0.5"
+  },
+  "dependencies": {
+    "@prisma/client": "7.10.0",
+    "prisma": "7.10.0"
   }
 }
