@@ -8,7 +8,8 @@ export default defineConfig({
     seed: 'tsx prisma/seed.ts',
   },
   datasource: {
-    url: process.env['DATABASE_URL'],
+    // Usamos DIRECT_URL para que la CLI (db push, migrate) use el puerto 5432
+    url: process.env['DIRECT_URL'] || process.env['DATABASE_URL'],
     directUrl: process.env['DIRECT_URL'],
   },
 });

@@ -1,0 +1,223 @@
+{
+  "clinica_id": "sonrisa-clinica-dental-001",
+  "clinica": {
+    "nombre": "Sonrisa Clínica Dental",
+    "telefono": "+56987654321",
+    "email": "contacto@sonrisaclinica.cl",
+    "direccion": {
+      "calle": "Av. Providencia 1234, of. 502",
+      "ciudad": "Providencia",
+      "region": "Santiago",
+      "pais": "CL",
+      "codigoPostal": "7500000"
+    },
+    "horario": {
+      "lunesViernes": "09:00-19:00",
+      "sabado": "09:00-14:00",
+      "domingo": "Cerrado"
+    },
+    "whatsappLink": "https://wa.me/56987654321",
+    "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.123456789!2d-70.612345!3d-33.437654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDI2JzE1LjY%22U!5e0!3m2!1ses!2scl!4v1234567890"
+  },
+  "identidadVisual": {
+    "colorPrincipal": "#0D9488",
+    "colorPrincipalHover": "#0F766E",
+    "colorPrincipalLight": "#CCFBF1",
+    "colorSecundario": "#14B8A6",
+    "colorAcento": "#F59E0B",
+    "colorFondo": "#F0FDFA",
+    "colorTexto": "#064E3B",
+    "colorTextoClaro": "#042F2E",
+    "colorError": "#DC2626",
+    "colorExito": "#16A34A",
+    "logoUrl": "/logo.svg",
+    "faviconUrl": "/favicon.ico",
+    "ogImageUrl": "/og-image.png"
+  },
+  "servicios": [
+    {
+      "id": "ortodoncia",
+      "nombre": "Ortodoncia",
+      "slug": "ortodoncia",
+      "descripcionCorta": "Alineadores invisibles y brackets estéticos para todas las edades.",
+      "descripcionLarga": "Corregimos la posición de tus dientes con tecnología de vanguardia. Ofrecemos alineadores invisibles (Invisalign, Spark), brackets autoligables cerámicos y ortodoncia interceptiva para niños.",
+      "beneficios": ["Estética discreta", "Menos visitas de control", "Resultado predecible con planificación 3D", "Apto para adultos y adolescentes"],
+      "duracionMinutos": 60,
+      "precioReferencial": 2500000,
+      "imagenUrl": "/tratamientos/ortodoncia.jpg",
+      "destacado": true,
+      "orden": 1
+    },
+    {
+      "id": "implantes",
+      "nombre": "Implantes Dentales",
+      "slug": "implantes-dentales",
+      "descripcionCorta": "Recupera tus dientes perdidos con implantes de titanio de alta gama.",
+      "descripcionLarga": "Reemplazo definitivo de piezas dentales ausentes. Cirugía guiada por computadora, carga inmediata cuando es posible y coronas de zirconio para máxima estética y durabilidad.",
+      "beneficios": ["Función y estética natural", "Previene pérdida ósea", "Durabilidad 20+ años", "Cirugía mínimamente invasiva"],
+      "duracionMinutos": 90,
+      "precioReferencial": 1800000,
+      "imagenUrl": "/tratamientos/implantes.jpg",
+      "destacado": true,
+      "orden": 2
+    },
+    {
+      "id": "blanqueamiento",
+      "nombre": "Blanqueamiento Dental",
+      "slug": "blanqueamiento-dental",
+      "descripcionCorta": "Sonrisa hasta 8 tonos más blanca en una sola sesión profesional.",
+      "descripcionLarga": "Blanqueamiento con peróxido de hidrógeno activado por luz LED de última generación. Incluye férulas para mantenimiento en casa y gel de retoque. Supervisado por especialista para evitar sensibilidad.",
+      "beneficios": ["Resultados inmediatos", "Seguro para el esmalte", "Incluye kit mantenimiento", "Una sola sesión de 60 min"],
+      "duracionMinutos": 60,
+      "precioReferencial": 350000,
+      "imagenUrl": "/tratamientos/blanqueamiento.jpg",
+      "destacado": true,
+      "orden": 3
+    },
+    {
+      "id": "diseno-sonrisa",
+      "nombre": "Diseño de Sonrisa",
+      "slug": "diseno-de-sonrisa",
+      "descripcionCorta": "Transformación estética completa con carillas de porcelana y mock-up digital.",
+      "descripcionLarga": "Planificación digital de tu nueva sonrisa (Digital Smile Design). Carillas de porcelana feldespática o disilicato de litio, mínimamente invasivas. Incluye mock-up provisional para probar el resultado antes del definitivo.",
+      "beneficios": ["Diseño 100% personalizado", "Prueba previa con mock-up", "Materiales de alta estética", "Mínimo desgaste dental"],
+      "duracionMinutos": 120,
+      "precioReferencial": 1200000,
+      "imagenUrl": "/tratamientos/diseno-sonrisa.jpg",
+      "destacado": false,
+      "orden": 4
+    },
+    {
+      "id": "odontopediatria",
+      "nombre": "Odontopediatría",
+      "slug": "odontopediatria",
+      "descripcionCorta": "Atención especializada para niños en ambiente lúdico y sin miedo.",
+      "descripcionLarga": "Primera visita a los 12 meses. Prevención con sellantes y flúor, tratamientos sin dolor con anestesia computarizada, manejo de conducta y ortodoncia interceptiva temprana.",
+      "beneficios": ["Especialista en niños", "Anestesia sin aguja (The Wand)", "Ambiente adaptado", "Educación a padres"],
+      "duracionMinutos": 45,
+      "precioReferencial": 80000,
+      "imagenUrl": "/tratamientos/odontopediatria.jpg",
+      "destacado": false,
+      "orden": 5
+    },
+    {
+      "id": "periodoncia",
+      "nombre": "Periodoncia",
+      "slug": "periodoncia",
+      "descripcionCorta": "Tratamiento de encías sangrantes, retracción y enfermedad periodontal.",
+      "descripcionLarga": "Diagnóstico y tratamiento de gingivitis y periodontitis. Raspado y alisado radicular, cirugía periodontal regenerativa, injertos de encía y mantenimiento periodontal de por vida.",
+      "beneficios": ["Detiene pérdida de dientes", "Mejora salud sistémica", "Técnicas regenerativas", "Mantenimiento incluido"],
+      "duracionMinutos": 60,
+      "precioReferencial": 150000,
+      "imagenUrl": "/tratamientos/periodoncia.jpg",
+      "destacado": false,
+      "orden": 6
+    }
+  ],
+  "especialistas": [
+    {
+      "id": "dra-maria-gonzalez",
+      "nombre": "Dra. María González",
+      "rol": "Directora Clínica / Ortodoncista",
+      "especialidad": "Ortodoncia y Ortopedia Dentofacial",
+      "descripcion": "Especialista en Ortodoncia (Univ. de Chile), Master en Alineadores Invisibles. 15 años de experiencia. Certificada Invisalign Diamond Provider y Spark.",
+      "aniosExperiencia": 15,
+      "imagenUrl": "/equipo/dra-maria-gonzalez.jpg",
+      "horarioAtencion": {
+        "lunes": "09:00-14:00",
+        "martes": "09:00-14:00",
+        "miercoles": "15:00-19:00",
+        "jueves": "15:00-19:00",
+        "viernes": "09:00-14:00"
+      },
+      "activo": true
+    },
+    {
+      "id": "dr-carlos-rodriguez",
+      "nombre": "Dr. Carlos Rodríguez",
+      "rol": "Cirujano Implantólogo",
+      "especialidad": "Implantología y Cirugía Oral",
+      "descripcion": "Especialista en Cirugía Bucomaxilofacial (Univ. de Concepción). Master en Implantología Avanzada (Univ. Complutense Madrid). 12 años colocando implantes con cirugía guiada.",
+      "aniosExperiencia": 12,
+      "imagenUrl": "/equipo/dr-carlos-rodriguez.jpg",
+      "horarioAtencion": {
+        "lunes": "15:00-19:00",
+        "martes": "15:00-19:00",
+        "miercoles": "09:00-14:00",
+        "jueves": "09:00-14:00",
+        "viernes": "15:00-19:00"
+      },
+      "activo": true
+    },
+    {
+      "id": "dra-paula-fernandez",
+      "nombre": "Dra. Paula Fernández",
+      "rol": "Especialista en Estética Dental",
+      "especialidad": "Odontología Estética y Rehabilitación Oral",
+      "descripcion": "Master en Estética Dental (Univ. Internacional de Cataluña). Experta en carillas, diseño de sonrisa digital y rehabilitaciones complejas. 10 años transformando sonrisas.",
+      "aniosExperiencia": 10,
+      "imagenUrl": "/equipo/dra-paula-fernandez.jpg",
+      "horarioAtencion": {
+        "lunes": "09:00-19:00",
+        "miercoles": "09:00-19:00",
+        "viernes": "09:00-14:00",
+        "sabado": "09:00-13:00"
+      },
+      "activo": true
+    },
+    {
+      "id": "dr-andres-silva",
+      "nombre": "Dr. Andrés Silva",
+      "rol": "Odontopediatra",
+      "especialidad": "Odontopediatría",
+      "descripcion": "Especialista en Odontopediatría (Univ. de Chile). Certificado en manejo de conducta y sedación consciente. 8 años atendiendo exclusivamente niños y adolescentes.",
+      "aniosExperiencia": 8,
+      "imagenUrl": "/equipo/dr-andres-silva.jpg",
+      "horarioAtencion": {
+        "martes": "09:00-14:00",
+        "jueves": "09:00-14:00",
+        "sabado": "09:00-13:00"
+      },
+      "activo": true
+    },
+    {
+      "id": "dra-sofia-martinez",
+      "nombre": "Dra. Sofía Martínez",
+      "rol": "Periodoncista",
+      "especialidad": "Periodoncia e Implantología",
+      "descripcion": "Especialista en Periodoncia (Univ. de Chile). Master en Cirugía Periodontal Plástica y Regenerativa. Tratamiento de recesiones gingivales y cirugía regenerativa avanzada.",
+      "aniosExperiencia": 9,
+      "imagenUrl": "/equipo/dra-sofia-martinez.jpg",
+      "horarioAtencion": {
+        "lunes": "15:00-19:00",
+        "miercoles": "15:00-19:00",
+        "viernes": "09:00-14:00"
+      },
+      "activo": true
+    }
+  ],
+  "seo": {
+    "title": "Sonrisa Clínica Dental - Dentistas en Providencia, Santiago",
+    "description": "Ortodoncia, implantes, blanqueamiento y diseño de sonrisa en Providencia, Santiago. Agenda tu hora online. Especialistas certificados.",
+    "keywords": ["dentista santiago", "ortodoncia providencia", "implantes dentales chile", "blanqueamiento dental", "diseño de sonrisa"],
+    "schemaOrg": {
+      "@context": "https://schema.org",
+      "@type": ["Dentist", "LocalBusiness"],
+      "name": "Sonrisa Clínica Dental",
+      "priceRange": "$$"
+    }
+  },
+  "chatbot": {
+    "nombre": "SonriBot",
+    "mensajeBienvenida": "¡Hola! Soy {nombreClinica}, tu asistente virtual. ¿En qué puedo ayudarte hoy?",
+    "mensajeDespedida": "¡Gracias por contactarnos! Te responderemos a la brevedad.",
+    "horarioActivo": "24/7",
+    "colorTema": "#0D9488",
+    "avatarUrl": "/chatbot-avatar.svg"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "ultimaActualizacion": "2026-01-15T10:00:00Z",
+    "entorno": "produccion"
+  }
+}

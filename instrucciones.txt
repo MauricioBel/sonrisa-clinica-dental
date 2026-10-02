@@ -1,1 +1,1 @@
-postgresql://postgres:[YOUR-PASSWORD]@db.xuqbqfbmnvbzgopykjmy.supabase.co:5432/postgres
+"El comando npx prisma db push falla con error P1001 porque mi proveedor de internet o router bloquea el puerto 5432 o tiene problemas con IPv6 hacia Supabase. Por favor, actualiza mi archivo backend/.env y backend/prisma.config.ts para asegurar que estemos usando las variables correctamente y genera un script en Node.js que use la librería pg o @neondatabase/serverless para probar si hay conexión al puerto 6543 o 5432."
