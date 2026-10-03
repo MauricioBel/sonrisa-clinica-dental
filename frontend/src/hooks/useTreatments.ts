@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { Treatment } from '../types/index.ts';
 import { api, ApiError } from '../lib/api.ts';
+import { FALLBACK_TREATMENTS } from '../lib/fallbackData.ts';
 
 interface AsyncState<T> {
   data: T | null;
@@ -20,13 +21,14 @@ export function useTreatments() {
     api
       .getTreatments()
       .then((data) => setState({ data, loading: false, error: null }))
-      .catch((e: unknown) =>
+      .catch((e: unknown) => {
+        console.warn('API treatments failed, using fallback:', e);
         setState({
-          data: null,
+          data: FALLBACK_TREATMENTS,
           loading: false,
-          error: e instanceof ApiError ? e.message : 'No fue posible cargar los tratamientos.',
-        }),
-      );
+          error: null,
+        });
+      });
   }, []);
 
   useEffect(() => {
@@ -52,12 +54,14 @@ export function useTreatment(slug: string) {
         if (!cancelled) setState({ data, loading: false, error: null });
       })
       .catch((e: unknown) => {
-        if (!cancelled)
+        if (!cancelled) {
+          const fallback = FALLBACK_TREATMENTS.find(t => t.slug === slug);
           setState({
-            data: null,
+            data: fallback ?? null,
             loading: false,
-            error: e instanceof ApiError ? e.message : 'No fue posible cargar el tratamiento.',
+            error: fallback ? null : (e instanceof ApiError ? e.message : 'No fue posible cargar el tratamiento.'),
           });
+        }
       });
     return () => {
       cancelled = true;
