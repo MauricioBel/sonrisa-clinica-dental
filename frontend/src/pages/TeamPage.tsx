@@ -8,6 +8,19 @@ import { useDentists } from '../hooks/useDentists.ts';
 import { dayName, dayNameShort } from '../lib/format.ts';
 import type { Dentist } from '../types/index.ts';
 
+function getDentistAvatar(name: string): string {
+  const femaleNames = ['valentina', 'camila', 'maría', 'paula', 'sofía', 'isabela', 'martina', 'lucia', 'antonia', 'emilia'];
+  const lowerName = name.toLowerCase();
+  const isFemale = femaleNames.some(fn => lowerName.includes(fn));
+
+  const femaleAvatars = ['avatar-female1.jpg', 'avatar-female2.jpg', 'avatar-female3.jpg', 'avatar-female4.jpg'];
+  const maleAvatars = ['avatar-male1.jpg', 'avatar-male2.jpg', 'avatar-male3.jpg', 'avatar-male4.jpg'];
+
+  const avatars = isFemale ? femaleAvatars : maleAvatars;
+  const index = Math.abs(name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % avatars.length;
+  return `/${avatars[index]}`;
+}
+
 function DentistSchedule({ dentist }: { dentist: Dentist }) {
   if (dentist.businessHours.length === 0) {
     return <p className="text-sm text-slate-500">Horarios por confirmar.</p>;
@@ -36,6 +49,11 @@ function DentistSchedule({ dentist }: { dentist: Dentist }) {
 
 export function TeamPage() {
   const { data: dentists, loading, error } = useDentists();
+
+  const dentistsWithAvatars = (dentists ?? []).map(d => ({
+    ...d,
+    imageUrl: getDentistAvatar(d.name),
+  }));
 
   return (
     <>
@@ -67,9 +85,9 @@ export function TeamPage() {
 
         {error && <ErrorMessage message={error} />}
 
-        {dentists && !error && (
+        {dentistsWithAvatars && !error && (
           <div className="grid gap-6 md:grid-cols-2">
-            {dentists.map((dentist) => (
+            {dentistsWithAvatars.map((dentist) => (
               <Card key={dentist.id} className="flex flex-col overflow-hidden sm:flex-row">
                 <div className="sm:w-52 sm:shrink-0">
                   <img
