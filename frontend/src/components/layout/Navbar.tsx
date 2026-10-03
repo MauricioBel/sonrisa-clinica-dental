@@ -20,7 +20,7 @@ export function Navbar() {
 
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-      isActive ? 'text-brand-800 bg-brand-50' : 'text-slate-600 hover:text-brand-800'
+      isActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-blue-700'
     }`;
 
   return (
@@ -50,7 +50,10 @@ export function Navbar() {
           >
             WhatsApp
           </a>
-          <Button to="/agendar-hora">
+          <Button
+            to="/agendar-hora"
+            className="min-h-[44px] bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md transition-all duration-200 rounded-lg"
+          >
             <CalendarCheck className="h-4 w-4" aria-hidden="true" />
             Agendar hora
           </Button>
@@ -59,7 +62,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-brand-900 hover:bg-brand-50 lg:hidden"
+          className="inline-flex items-center justify-center rounded-lg p-2 text-slate-900 hover:bg-slate-100 lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
@@ -88,7 +91,10 @@ export function Navbar() {
               </li>
             ))}
             <li className="flex flex-col gap-2 pt-3">
-              <Button to="/agendar-hora" className="w-full">
+              <Button
+                to="/agendar-hora"
+                className="w-full min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md transition-all duration-200 rounded-lg"
+              >
                 <CalendarCheck className="h-4 w-4" aria-hidden="true" />
                 Agendar hora
               </Button>
@@ -96,7 +102,7 @@ export function Navbar() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-brand-300 px-4 py-3 text-sm font-semibold text-brand-800 hover:bg-brand-50 min-h-[44px]"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-blue-600 px-4 py-3 text-sm font-semibold text-blue-600 hover:bg-blue-50 min-h-[44px]"
               >
                 WhatsApp
               </a>
