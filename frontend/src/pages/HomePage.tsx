@@ -79,6 +79,19 @@ const TESTIMONIALS = [
   },
 ];
 
+function getDentistAvatar(name: string): string {
+  const femaleNames = ['valentina', 'camila', 'maría', 'paula', 'sofía', 'isabela', 'martina', 'lucia', 'antonia', 'emilia'];
+  const lowerName = name.toLowerCase();
+  const isFemale = femaleNames.some(fn => lowerName.includes(fn));
+
+  const femaleAvatars = ['avatar-female1.jpg', 'avatar-female2.jpg', 'avatar-female3.jpg', 'avatar-female4.jpg'];
+  const maleAvatars = ['avatar-male1.jpg', 'avatar-male2.jpg', 'avatar-male3.jpg', 'avatar-male4.jpg'];
+
+  const avatars = isFemale ? femaleAvatars : maleAvatars;
+  const index = Math.abs(name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % avatars.length;
+  return `/${avatars[index]}`;
+}
+
 export function HomePage() {
   const treatments = useTreatments();
   const dentists = useDentists();
@@ -90,6 +103,11 @@ export function HomePage() {
     .slice(0, 3);
 
   const featuredDentists = (dentists.data ?? []).slice(0, 3);
+
+  const dentistsWithAvatars = featuredDentists.map(dentist => ({
+    ...dentist,
+    imageUrl: getDentistAvatar(dentist.name),
+  }));
 
   const localBusinessJsonLd = {
     '@context': 'https://schema.org',
@@ -165,13 +183,11 @@ export function HomePage() {
             title="Tratamientos destacados"
             description="Conoce algunos de los tratamientos más solicitados por nuestros pacientes."
           />
-          <div className="mt-10 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:snap-none md:overflow-visible md:pb-0">
-            <TreatmentList
+          <TreatmentList
               treatments={featuredTreatments}
               loading={treatments.loading}
               error={treatments.error}
             />
-          </div>
           <div className="mt-10 text-center">
             <Button
               to="/tratamientos"
@@ -187,79 +203,97 @@ export function HomePage() {
 
       <section className="bg-white py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div>
-              <SectionTitle
-                align="left"
-                eyebrow="¿Por qué elegirnos?"
-                title="Tecnología y calidez en cada consulta"
-              />
-              <p className="mt-4 text-base leading-relaxed text-slate-600">
-                Desde 2009 acompañamos a familias de Santiago con una odontología
-                preventiva y estética de excelencia. Nuestro compromiso es que
-                cada visita sea una experiencia tranquila y transparente.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  'Presupuestos claros antes de iniciar cualquier tratamiento',
-                  'Pagos en cuotas y convenios con las principales clínicas',
-                  'Certificación de bioseguridad vigente',
-                  'Atención para pacientes adultos y niños',
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
-                    <Stethoscope className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  to="/nosotros"
-                  size="lg"
-                  className="min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md transition-all duration-200 rounded-lg"
-                >
-                  Conócenos
-                </Button>
-                <Button
-                  to="/contacto"
-                  size="lg"
-                  className="min-h-[48px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg"
-                >
-                  Contáctanos
-                </Button>
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {featuredDentists.map((dentist) => (
-                <Card key={dentist.id} className="overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-200 rounded-xl">
+          <SectionTitle
+            align="left"
+            eyebrow="¿Por qué elegirnos?"
+            title="Tecnología y calidez en cada consulta"
+          />
+          <p className="mt-4 text-base leading-relaxed text-slate-600">
+            Desde 2009 acompañamos a familias de Santiago con una odontología
+            preventiva y estética de excelencia. Nuestro compromiso es que
+            cada visita sea una experiencia tranquila y transparente.
+          </p>
+          <ul className="mt-6 space-y-3">
+            {[
+              'Presupuestos claros antes de iniciar cualquier tratamiento',
+              'Pagos en cuotas y convenios con las principales clínicas',
+              'Certificación de bioseguridad vigente',
+              'Atención para pacientes adultos y niños',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
+                <Stethoscope className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button
+              to="/nosotros"
+              size="lg"
+              className="min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md transition-all duration-200 rounded-lg"
+            >
+              Conócenos
+            </Button>
+            <Button
+              to="/contacto"
+              size="lg"
+              className="min-h-[48px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg"
+            >
+              Contáctanos
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 py-10 sm:py-14">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            eyebrow="Nuestro Equipo"
+            title="Especialistas a tu Servicio"
+            description="Conoce a los profesionales que cuidan tu sonrisa con dedicación y experiencia."
+          />
+          <div className="mt-10 grid gap-8 grid-cols-1 md:grid-cols-2">
+            {dentistsWithAvatars.map((dentist) => (
+              <Card key={dentist.id} className="overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-200 rounded-xl bg-white">
+                <div className="relative aspect-square bg-slate-100">
                   <img
                     src={dentist.imageUrl}
                     alt={`${dentist.name}, ${dentist.role}`}
                     loading="lazy"
-                    className="h-40 w-full object-cover"
+                    className="h-full w-full object-cover object-center rounded-2xl"
                   />
-                  <div className="p-4">
-                    <h3 className="font-display text-sm font-bold text-slate-900">
-                      {dentist.name}
-                    </h3>
-                    <p className="text-xs text-slate-500">{dentist.specialty}</p>
-                  </div>
-                </Card>
-              ))}
-              <Card className="flex flex-col items-center justify-center bg-blue-50 p-6 text-center border border-blue-100 rounded-xl">
-                <Smile className="h-10 w-10 text-blue-600" aria-hidden="true" />
-                <p className="mt-3 font-display text-sm font-semibold text-slate-900">
-                  Conoce a todo nuestro equipo
-                </p>
-                <Button
-                  to="/equipo"
-                  size="lg"
-                  className="mt-4 min-h-[48px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg"
-                >
-                  Ver equipo
-                </Button>
+                </div>
+                <div className="p-5 text-center">
+                  <h3 className="font-display text-lg font-bold text-slate-900">
+                    {dentist.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-blue-600 font-medium">{dentist.specialty}</p>
+                  <p className="mt-1 text-sm text-slate-500">{dentist.experienceYears} años de experiencia</p>
+                  <a
+                    key={dentist.id}
+                    href={`${whatsappLink}&text=Hola, quisiera agendar una cita con ${encodeURIComponent(dentist.name)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors min-h-[44px]"
+                  >
+                    Agendar cita
+                  </a>
+                </div>
               </Card>
-            </div>
+            ))}
+            <Card className="flex flex-col items-center justify-center bg-blue-50 p-6 text-center border border-blue-100 rounded-xl">
+              <Smile className="h-10 w-10 text-blue-600" aria-hidden="true" />
+              <p className="mt-3 font-display text-sm font-semibold text-slate-900">
+                Conoce a todo nuestro equipo
+              </p>
+              <Button
+                to="/equipo"
+                size="lg"
+                className="mt-4 min-h-[48px] border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg"
+              >
+                Ver equipo
+              </Button>
+            </Card>
           </div>
         </div>
       </section>
