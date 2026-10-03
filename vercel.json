@@ -2,18 +2,15 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "node",
-  "regions": ["iad1"],
-  "functions": {
-    "backend/dist/vercel.js": {
-      "maxDuration": 30,
-      "runtime": "nodejs20.x"
-    }
-  },
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/backend/dist/vercel.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/dist/index.html"
     }
   ]
 }
