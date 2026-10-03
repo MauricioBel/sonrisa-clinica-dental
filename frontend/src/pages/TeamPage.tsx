@@ -85,7 +85,7 @@ export function TeamPage() {
 
         {error && <ErrorMessage message={error} />}
 
-        {dentistsWithAvatars && !error && (
+        {dentistsWithAvatars.length > 0 && !error && (
           <div className="grid gap-6 md:grid-cols-2">
             {dentistsWithAvatars.map((dentist) => (
               <Card key={dentist.id} className="flex flex-col overflow-hidden sm:flex-row">

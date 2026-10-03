@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Dentist } from '../types/index.ts';
-import { api, ApiError } from '../lib/api.ts';
+import { api } from '../lib/api.ts';
+import { FALLBACK_DENTISTS } from '../lib/fallbackData.ts';
 
 interface AsyncState<T> {
   data: T | null;
@@ -19,13 +20,14 @@ export function useDentists() {
     api
       .getDentists()
       .then((data) => setState({ data, loading: false, error: null }))
-      .catch((e: unknown) =>
+      .catch((e: unknown) => {
+        console.warn('API dentists failed, using fallback:', e);
         setState({
-          data: null,
+          data: FALLBACK_DENTISTS,
           loading: false,
-          error: e instanceof ApiError ? e.message : 'No fue posible cargar el equipo médico.',
-        }),
-      );
+          error: null,
+        });
+      });
   }, []);
 
   return state;
