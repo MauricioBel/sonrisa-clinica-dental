@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Plus, CalendarCheck, Users, LayoutDashboard, DollarSign } from 'lucide-react';
 import { useAdminAuth } from '../../context/AdminAuthContext.tsx';
-import { DashboardLayout } from '../../components/dashboard/DashboardLayout.tsx';
 import { KpiCard } from '../../components/dashboard/KpiCard.tsx';
 import { AgendaView } from '../../components/dashboard/AgendaView.tsx';
 import { CreateAppointmentModal } from '../../components/dashboard/CreateAppointmentModal.tsx';
@@ -105,7 +104,6 @@ export function DashboardPage() {
   };
 
   return (
-    <DashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -114,7 +112,7 @@ export function DashboardPage() {
               Bienvenido, {user?.nombre} · {user?.clinicaNombre}
             </p>
           </div>
-          <Button className="w-full sm:w-auto" size="lg" variant="primary" onClick={() => setIsModalOpen(true)}>
+          <Button className="w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300" size="lg" variant="primary" onClick={() => setIsModalOpen(true)}>
             <Plus className="h-5 w-5 mr-2" aria-hidden="true" />
             + Nueva Cita
           </Button>
@@ -139,8 +137,10 @@ export function DashboardPage() {
           )}
           {renderKpiCard(
             'Sillones Ocupados',
-            metrics ? `${metrics.confirmed}/${metrics.totalToday}` : '0/0',
-            metrics && metrics.totalToday > 0 ? `${Math.round((metrics.confirmed / metrics.totalToday) * 100)}% ocupación` : 'Sin datos',
+            metrics && metrics.totalToday > 0 ? `${metrics.confirmed}/${metrics.totalToday}` : '—',
+            metrics && metrics.totalToday > 0
+              ? `${Math.round((metrics.confirmed / metrics.totalToday) * 100)}% ocupación`
+              : 'Sin citas programadas',
             'Óptimo',
             'success',
             LayoutDashboard
@@ -164,6 +164,5 @@ export function DashboardPage() {
           currentUser={user}
         />
       </div>
-    </DashboardLayout>
   );
 }

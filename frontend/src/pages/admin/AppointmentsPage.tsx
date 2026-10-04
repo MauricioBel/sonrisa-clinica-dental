@@ -4,6 +4,7 @@ import { Card } from '../../components/ui/Card.tsx';
 import { SectionTitle } from '../../components/ui/SectionTitle.tsx';
 import { Button } from '../../components/ui/Button.tsx';
 import { Badge } from '../../components/ui/Badge.tsx';
+import { EmptyAppointmentsState } from '../../components/ui/EmptyState.tsx';
 import { adminApi } from '../../lib/api-admin.ts';
 import type { AdminAppointment, AdminAppointmentsResponse } from '../../types/admin.ts';
 
@@ -182,8 +183,10 @@ export function AdminAppointmentsPage() {
                 </tr>
               ) : data?.data.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="p-8 text-center text-slate-500">
-                    No se encontraron citas con los filtros actuales
+                  <td colSpan={8} className="p-8">
+                    <EmptyAppointmentsState
+                      hasFilters={!!(statusFilter || dateFrom || dateTo || search)}
+                    />
                   </td>
                 </tr>
               ) : (

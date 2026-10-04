@@ -6,8 +6,9 @@ import { HomePage } from './pages/HomePage.tsx';
 import { Spinner } from './components/ui/Feedback.tsx';
 import { ConfigProvider } from './context/ConfigContext.tsx';
 import { AdminAuthProvider } from './context/AdminAuthContext.tsx';
+import { ThemeProvider } from './context/ThemeContext.tsx';
 import { ProtectedRoute } from './components/auth/ProtectedRoute.tsx';
-import { AdminLayout } from './components/layout/AdminLayout.tsx';
+import { DashboardLayout } from './components/dashboard/DashboardLayout.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,14 +60,18 @@ const DashboardPage = lazy(() =>
 const AdminAppointmentsPage = lazy(() =>
   import('./pages/admin/AppointmentsPage.tsx').then((m) => ({ default: m.AdminAppointmentsPage })),
 );
+const AdminSettingsPage = lazy(() =>
+  import('./pages/admin/SettingsPage.tsx').then((m) => ({ default: m.SettingsPage })),
+);
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider>
-        <AdminAuthProvider>
-          <BrowserRouter>
-            <Suspense
+      <ThemeProvider>
+        <ConfigProvider>
+          <AdminAuthProvider>
+            <BrowserRouter>
+              <Suspense
               fallback={
                 <div className="min-h-[50vh]">
                   <Spinner label="Cargando página..." />
@@ -88,9 +93,10 @@ export default function App() {
                 </Route>
                 <Route path="/admin/login" element={<AdminLoginPage />} />
                 <Route element={<ProtectedRoute />}>
-                  <Route element={<AdminLayout />}>
+                  <Route element={<DashboardLayout />}>
                     <Route path="/admin" element={<DashboardPage />} />
                     <Route path="/admin/citas" element={<AdminAppointmentsPage />} />
+                    <Route path="/admin/settings" element={<AdminSettingsPage />} />
                   </Route>
                 </Route>
               </Routes>
@@ -98,6 +104,7 @@ export default function App() {
           </BrowserRouter>
         </AdminAuthProvider>
       </ConfigProvider>
-    </QueryClientProvider>
+    </ThemeProvider>
+  </QueryClientProvider>
   );
 }

@@ -1,8 +1,6 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "main": "dist/vercel.js",
-  "installCommand": "npm install",
-  "framework": "node",
-  "regions": ["iad1"]
+  "main": "vercel.js",
+  "installCommand": "npm install"
 }
