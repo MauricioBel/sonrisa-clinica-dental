@@ -102,7 +102,7 @@ export function HomePage() {
     .filter((t) => t.isFeatured)
     .slice(0, 3);
 
-  const featuredDentists = (dentists.data ?? []).slice(0, 3);
+  const featuredDentists = (dentists.data ?? []);
 
   const dentistsWithAvatars = featuredDentists.map(dentist => ({
     ...dentist,
@@ -252,7 +252,7 @@ export function HomePage() {
             title="Especialistas a tu Servicio"
             description="Conoce a los profesionales que cuidan tu sonrisa con dedicación y experiencia."
           />
-          <div className="mt-10 grid gap-8 grid-cols-1 md:grid-cols-2">
+          <div className="mt-10 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {dentistsWithAvatars.map((dentist) => (
               <Card key={dentist.id} className="overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-200 rounded-xl bg-white">
                 <div className="relative aspect-square bg-slate-100">
@@ -281,7 +281,7 @@ export function HomePage() {
                 </div>
               </Card>
             ))}
-            <Card className="flex flex-col items-center justify-center bg-blue-50 p-6 text-center border border-blue-100 rounded-xl">
+            <Card className="flex flex-col items-center justify-center bg-blue-50 p-6 text-center border border-blue-100 rounded-xl lg:col-span-3 md:col-span-2">
               <Smile className="h-10 w-10 text-blue-600" aria-hidden="true" />
               <p className="mt-3 font-display text-sm font-semibold text-slate-900">
                 Conoce a todo nuestro equipo
@@ -298,7 +298,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="bg-white py-10 sm:py-14">
+      <section className="bg-slate-50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle
             eyebrow="Testimonios"
