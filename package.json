@@ -1,15 +1,11 @@
 {
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
-    "build": "npm run build --prefix backend && npm run build --prefix frontend",
-    "build:backend": "npm run build --prefix backend",
-    "build:frontend": "npm run build --prefix frontend"
+    "postinstall": "prisma skills sync || exit 0"
   },
   "devDependencies": {
-    "concurrently": "^10.0.5"
-  },
-  "dependencies": {
-    "@prisma/client": "7.10.0",
-    "prisma": "7.10.0"
+    "@prisma/client": "^7.10.0",
+    "concurrently": "^10.0.5",
+    "prisma": "^8.0.0-rc.17"
   }
 }
