@@ -491,6 +491,146 @@ select {
 }
 
 /* ========================================
+   TEMA LIGHT - Claro, profesional, alto contraste para Landing Page
+   ======================================== */
+.theme-light {
+  --radius-card: var(--radius-xl);
+  --radius-button: var(--radius-lg);
+  --radius-input: var(--radius-lg);
+  --radius-badge: var(--radius-md);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
+  --shadow-card-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-button: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-button-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --bg-page: #ffffff;
+  --bg-section: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+}
+
+.theme-light body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.theme-light .btn-primary {
+  background-color: var(--color-brand-700);
+  color: white;
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-button);
+  transition: all var(--transition-fast);
+}
+
+.theme-light .btn-primary:hover {
+  background-color: var(--color-brand-800);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
+
+.theme-light .btn-secondary {
+  background-color: transparent;
+  color: var(--color-brand-700);
+  border: 2px solid var(--color-brand-700);
+  border-radius: var(--radius-button);
+  transition: all var(--transition-fast);
+}
+
+.theme-light .btn-secondary:hover {
+  background-color: var(--color-brand-50);
+  border-color: var(--color-brand-800);
+}
+
+.theme-light .card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-normal);
+}
+
+.theme-light .card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-brand-200);
+}
+
+.theme-light .input-field {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-input);
+  background-color: var(--bg-card);
+  transition: all var(--transition-fast);
+}
+
+.theme-light .input-field:focus {
+  border-color: var(--color-brand-700);
+  box-shadow: 0 0 0 3px var(--color-brand-100);
+}
+
+.theme-light .badge {
+  border-radius: var(--radius-badge);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.theme-light .btn-outline {
+  border: 2px solid var(--color-brand-300);
+  color: var(--color-brand-800);
+  background-color: transparent;
+  border-radius: var(--radius-button);
+  transition: all var(--transition-fast);
+}
+
+.theme-light .btn-outline:hover {
+  background-color: var(--color-brand-50);
+  border-color: var(--color-brand-700);
+}
+
+.theme-light .btn-ghost {
+  color: var(--color-brand-800);
+  background-color: transparent;
+  border-radius: var(--radius-button);
+  transition: all var(--transition-fast);
+}
+
+.theme-light .btn-ghost:hover {
+  background-color: var(--color-brand-50);
+}
+
+.theme-light .btn-whatsapp {
+  background-color: #167D3F;
+  color: white;
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-button);
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.theme-light .btn-whatsapp:hover {
+  background-color: #137638;
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-2px);
+  border-color: #0f5c2e;
+}
+
+.theme-light .hero-gradient {
+  background: linear-gradient(135deg, var(--color-brand-50) 0%, #ffffff 100%);
+}
+
+.theme-light .section-divider {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.theme-light ::selection {
+  background: var(--color-brand-500);
+  color: white;
+}
+
+/* ========================================
    UTILIDADES COMPARTIDAS
    ======================================== */
 .btn-primary,

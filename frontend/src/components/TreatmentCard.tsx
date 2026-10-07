@@ -14,12 +14,15 @@ interface TreatmentCardProps {
 export function TreatmentCard({ treatment, className = '' }: TreatmentCardProps) {
   return (
     <Card interactive className={`flex h-full flex-col overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-200 rounded-xl ${className}`}>
-      <div className="relative aspect-[4/3] bg-slate-50">
+      <div className="relative aspect-[3/2] w-full overflow-hidden rounded-t-xl bg-slate-50">
         <img
           src={treatment.imageUrl}
           alt={`Ilustración del tratamiento ${treatment.name}`}
           loading="lazy"
           className="h-full w-full object-cover"
+          onError={(e) => {
+            e.currentTarget.src = '/images/placeholder-treatment.jpg';
+          }}
         />
         {treatment.isFeatured && (
           <Badge variant="accent" className="absolute left-3 top-3 bg-blue-50 text-blue-700 border-blue-100">
@@ -58,7 +61,7 @@ export function TreatmentCard({ treatment, className = '' }: TreatmentCardProps)
 export function TreatmentCardSkeleton({ className = '' }: { className?: string }) {
   return (
     <Card className={`overflow-hidden shadow-sm border border-slate-100 rounded-xl ${className}`}>
-      <Skeleton className="aspect-[4/3] rounded-none" />
+      <Skeleton className="aspect-[3/2] w-full rounded-t-xl" />
       <div className="space-y-3 p-5">
         <Skeleton className="h-5 w-2/3" />
         <Skeleton className="h-4 w-full" />

@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage.tsx';
 import { Spinner } from './components/ui/Feedback.tsx';
 import { ConfigProvider } from './context/ConfigContext.tsx';
 import { AdminAuthProvider } from './context/AdminAuthContext.tsx';
+import { ThemeProvider } from './context/ThemeContext.tsx';
 import { ProtectedRoute } from './components/auth/ProtectedRoute.tsx';
 import { AdminLayout } from './components/layout/AdminLayout.tsx';
 
@@ -63,10 +64,11 @@ const AdminAppointmentsPage = lazy(() =>
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider>
-        <AdminAuthProvider>
-          <BrowserRouter>
-            <Suspense
+      <ThemeProvider>
+        <ConfigProvider>
+          <AdminAuthProvider>
+            <BrowserRouter>
+              <Suspense
               fallback={
                 <div className="min-h-[50vh]">
                   <Spinner label="Cargando página..." />
@@ -98,6 +100,7 @@ export default function App() {
           </BrowserRouter>
         </AdminAuthProvider>
       </ConfigProvider>
-    </QueryClientProvider>
+    </ThemeProvider>
+  </QueryClientProvider>
   );
 }
