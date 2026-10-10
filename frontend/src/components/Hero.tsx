@@ -11,9 +11,12 @@ interface HeroProps {
 export function Hero({ eyebrow, title, description }: HeroProps) {
   return (
     <section className="relative overflow-hidden">
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero-clinica.jpg')" }}
+      <img
+        src="/hero-clinica.webp"
+        alt="Sonrisa Clínica Dental"
+        loading="eager"
+        fetchPriority="high"
+        className="absolute inset-0 z-0 w-full h-full object-cover"
         aria-hidden="true"
       />
       <div className="absolute inset-0 z-0 bg-white/60" aria-hidden="true" />

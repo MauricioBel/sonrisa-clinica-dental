@@ -84,8 +84,8 @@ function getDentistAvatar(name: string): string {
   const lowerName = name.toLowerCase();
   const isFemale = femaleNames.some(fn => lowerName.includes(fn));
 
-  const femaleAvatars = ['avatar-female1.jpg', 'avatar-female2.jpg', 'avatar-female3.jpg', 'avatar-female4.jpg'];
-  const maleAvatars = ['avatar-male1.jpg', 'avatar-male2.jpg', 'avatar-male3.jpg', 'avatar-male4.jpg'];
+  const femaleAvatars = ['avatar-female1.webp', 'avatar-female2.webp', 'avatar-female3.webp', 'avatar-female4.webp'];
+  const maleAvatars = ['avatar-male1.webp', 'avatar-male2.webp', 'avatar-male3.webp', 'avatar-male4.webp'];
 
   const avatars = isFemale ? femaleAvatars : maleAvatars;
   const index = Math.abs(name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % avatars.length;

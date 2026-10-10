@@ -1,23 +1,9 @@
-// Schema de base de datos de Sonrisa Clínica Dental
-// Documentación: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-}
-
-/// Estado del ciclo de vida de una reserva.
-/// El MVP crea reservas como CONFIRMED; PENDING/CANCELLED/COMPLETED
-/// quedan disponibles para administración futura.
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  CANCELLED
-  COMPLETED
 }
 
 model Dentist {
@@ -61,10 +47,10 @@ model Treatment {
 model BusinessHours {
   id        Int     @id @default(autoincrement())
   dentistId Int
-  dentist   Dentist @relation(fields: [dentistId], references: [id], onDelete: Cascade)
   dayOfWeek Int
   openTime  String
   closeTime String
+  dentist   Dentist @relation(fields: [dentistId], references: [id], onDelete: Cascade)
 
   @@unique([dentistId, dayOfWeek])
   @@index([dentistId])
@@ -83,12 +69,12 @@ model Appointment {
   comment         String?
   status          AppointmentStatus @default(CONFIRMED)
   dentistId       Int
-  dentist         Dentist           @relation(fields: [dentistId], references: [id], onDelete: Restrict)
   treatmentId     Int
-  treatment       Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
   clinicaId       String
-  clinica         Clinica           @relation(fields: [clinicaId], references: [id], onDelete: Restrict)
   createdAt       DateTime          @default(now())
+  clinica         Clinica           @relation(fields: [clinicaId], references: [id])
+  dentist         Dentist           @relation(fields: [dentistId], references: [id])
+  treatment       Treatment         @relation(fields: [treatmentId], references: [id])
 
   @@unique([dentistId, date, time, clinicaId])
   @@index([dentistId])
@@ -103,8 +89,8 @@ model Clinica {
   slug         String        @unique
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  appointments Appointment[]
   admins       AdminUser[]
+  appointments Appointment[]
 }
 
 model AdminUser {
@@ -113,10 +99,20 @@ model AdminUser {
   password  String
   nombre    String
   clinicaId String
-  clinica   Clinica  @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  clinica   Clinica  @relation(fields: [clinicaId], references: [id], onDelete: Cascade)
 
   @@unique([clinicaId, email])
   @@index([clinicaId])
+}
+
+/// Estado del ciclo de vida de una reserva.
+/// El MVP crea reservas como CONFIRMED; PENDING/CANCELLED/COMPLETED
+/// quedan disponibles para administración futura.
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
 }
